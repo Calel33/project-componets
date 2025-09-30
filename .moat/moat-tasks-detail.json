@@ -1,0 +1,17 @@
+[
+  {
+    "id": "60f2aee3-9546-4720-bf7b-28170a0b7e0a",
+    "title": "Colored Container",
+    "comment": "what componet is this",
+    "selector": "div.gap-8.lg:flex-row:nth-child(1) > div.gap-6.lg:items-end:nth-child(2) > div.items-center.gap-4:nth-child(1)",
+    "boundingRect": {
+      "x": 1572,
+      "y": 96,
+      "w": 305,
+      "h": 78
+    },
+    "screenshotPath": "./screenshots/moat-1759176776575-omds0ux4l.png",
+    "status": "done",
+    "timestamp": 1759176777137
+  }
+]

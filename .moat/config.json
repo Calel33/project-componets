@@ -1,0 +1,14 @@
+{
+  "version": "1.0.0",
+  "projectName": "project-componets",
+  "createdAt": "2025-09-29T20:12:42.904Z",
+  "streaming": {
+    "enabled": true,
+    "format": "jsonl",
+    "cursorIntegration": true
+  },
+  "ui": {
+    "autoShowMoat": true,
+    "confirmBeforeSend": false
+  }
+}
