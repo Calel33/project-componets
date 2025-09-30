@@ -9,6 +9,24 @@ export interface TestimonialAuthor {
   company?: string;
   avatar?: string;
   avatarAlt?: string;
+  location?: string;
+}
+
+export interface TestimonialMetrics {
+  label: string;
+  value: string;
+  change?: string;
+}
+
+export interface TestimonialBadge {
+  label: string;
+  variant: 'success' | 'info' | 'warning' | 'primary';
+}
+
+export interface TestimonialTimeline {
+  phase: string;
+  description: string;
+  color: 'green' | 'blue' | 'violet';
 }
 
 export interface Testimonial {
@@ -17,6 +35,18 @@ export interface Testimonial {
   author: TestimonialAuthor;
   hasMeteor?: boolean;
   meteorDelay?: number;
+  rating?: number;
+  maxRating?: number;
+  industry?: {
+    name: string;
+    icon?: string;
+  };
+  metrics?: TestimonialMetrics[];
+  badges?: TestimonialBadge[];
+  timeline?: TestimonialTimeline[];
+  variant?: 'default' | 'featured' | 'detailed' | 'quote' | 'video';
+  hasVideo?: boolean;
+  cardHeight?: 'short' | 'medium' | 'tall';
 }
 
 export interface TestimonialsGridProps {
@@ -38,5 +68,40 @@ export interface TestimonialCardProps {
 
 export interface MeteorBackgroundProps {
   delay?: number;
+  className?: string;
+}
+
+export interface TestimonialsMasonryProps {
+  title?: string;
+  subtitle?: string;
+  testimonials: Testimonial[];
+  showParticles?: boolean;
+  showCTA?: boolean;
+  staggerAnimation?: boolean;
+  className?: string;
+}
+
+export interface ParticleBackgroundProps {
+  particleCount?: number;
+  className?: string;
+}
+
+export interface StaggeredAnimationProps {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}
+
+export interface CallToActionProps {
+  title?: string;
+  description?: string;
+  primaryButton?: {
+    label: string;
+    onClick?: () => void;
+  };
+  secondaryButton?: {
+    label: string;
+    onClick?: () => void;
+  };
   className?: string;
 }
