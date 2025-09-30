@@ -19,6 +19,7 @@
 
 // Re-export domain modules as namespaces to avoid conflicts
 export * as Auth from './components/auth';
+export * as Automotive from './components/automotive';
 export * as Childcare from './components/childcare';
 export * as FeatureGrid from './components/feature-grid';
 export * as Footer from './components/footer';
