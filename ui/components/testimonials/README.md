@@ -189,3 +189,33 @@ const basicTestimonials = [
   meteorDelay={1.5}
 />
 ```
+
+## Testimonials Masonry Layout
+
+The `TestimonialsMasonry` component provides a Pinterest-style masonry layout with responsive columns, staggered animations, and particle background effects.
+
+### Features
+
+- **Responsive Masonry Layout**: 1 column (mobile) → 2 columns (tablet) → 3 columns (desktop+)
+- **CSS Column-based Implementation**: Uses CSS columns with `break-inside: avoid` for optimal performance
+- **Staggered Animations**: Sequential fade-up animation with customizable delays
+- **Particle Background**: Interactive particle system with mouse repulsion effects
+- **Card Variants**: Support for different testimonial card types and heights
+- **Glassmorphism Effects**: Backdrop blur and transparent borders for modern aesthetics
+- **Performance Optimized**: Respects `prefers-reduced-motion` and includes print styles
+
+### Usage
+
+```tsx
+import { TestimonialsMasonry } from '@/ui/components/testimonials';
+
+<TestimonialsMasonry
+  title="Loved by teams worldwide"
+  subtitle="We partner with forward-thinking companies to craft digital products."
+  testimonials={testimonials}
+  showParticles={true}
+  showCTA={true}
+  staggerAnimation={true}
+/>
+```
+
