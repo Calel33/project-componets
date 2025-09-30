@@ -3,8 +3,8 @@
  * Demonstrates the Portfolio Grid component with sample data
  */
 
-import { PortfolioGrid } from '../alimonyapp/componets/portfolio';
-import type { PortfolioColumn } from '../alimonyapp/componets/types/portfolio.types';
+import { PortfolioGrid } from '../ui/components/portfolio';
+import type { PortfolioColumn } from '../ui/components/types/portfolio.types';
 
 const portfolioData: { columns: PortfolioColumn[] } = {
   columns: [

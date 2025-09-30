@@ -44,6 +44,14 @@ export const DiscoverIcon = ({ className = 'w-8 h-6' }: { className?: string }) 
   </svg>
 );
 
+export const ApplePayIcon = ({ className = 'w-8 h-6' }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="48" height="32" rx="4" fill="#000"/>
+    <path d="M12 16c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4-4-1.8-4-4zm7-7c1.7 0 3 1.3 3 3v8c0 1.7-1.3 3-3 3h-6c-1.7 0-3-1.3-3-3v-8c0-1.7 1.3-3 3-3h6zm-3 2.5c-.8 0-1.5.7-1.5 1.5s.7 1.5 1.5 1.5 1.5-.7 1.5-1.5-.7-1.5-1.5-1.5z" fill="white"/>
+    <text x="28" y="20" fill="white" fontSize="8" fontFamily="Arial">Pay</text>
+  </svg>
+);
+
 export const CardBrandIcon = ({ brand, className }: CardBrandIconProps) => {
   const icons = {
     visa: VisaIcon,
@@ -51,6 +59,7 @@ export const CardBrandIcon = ({ brand, className }: CardBrandIconProps) => {
     amex: AmexIcon,
     paypal: PayPalIcon,
     discover: DiscoverIcon,
+    'apple-pay': ApplePayIcon,
   };
 
   const Icon = icons[brand];

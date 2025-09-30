@@ -22,9 +22,9 @@ import {
   Briefcase,
   Target,
 } from 'lucide-react';
-import { BentoCard } from '../alimonyapp/componets/medical/BentoCard';
-import { useScrollAnimation } from '../alimonyapp/componets/medical/hooks/useScrollAnimation';
-import '../alimonyapp/componets/medical/medical-animations.css';
+import { BentoCard } from '../ui/components/medical/BentoCard';
+import { useScrollAnimation } from '../ui/components/medical/hooks/useScrollAnimation';
+import '../ui/components/medical/medical-animations.css';
 
 export const DesignAgencyLanding: React.FC = () => {
   const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation();

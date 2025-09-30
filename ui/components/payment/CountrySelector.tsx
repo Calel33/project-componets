@@ -47,7 +47,7 @@ export const CountrySelector: React.FC<CountrySelectorProps> = ({
               : 'border-white/10 focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/30'
           }
         `}
-        aria-invalid={hasError}
+        aria-invalid={hasError ? "true" : "false"}
         aria-describedby={hasError ? `${id}-error` : undefined}
         aria-required={required}
       >
