@@ -46,7 +46,7 @@ export interface PaymentResult {
   error?: string;
 }
 
-export type PaymentMethod = 'visa' | 'mastercard' | 'amex' | 'paypal' | 'discover';
+export type PaymentMethod = 'visa' | 'mastercard' | 'amex' | 'paypal' | 'discover' | 'apple-pay';
 
 export type CardType = 'visa' | 'mastercard' | 'amex' | 'discover' | 'unknown';
 
@@ -82,6 +82,8 @@ export interface PaymentFormProps {
 export interface OrderSummaryProps {
   items: OrderItem[];
   subtotal: number;
+  discount?: number;
+  shipping?: number;
   tax: number;
   total: number;
   termsLink?: string;

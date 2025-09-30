@@ -31,10 +31,10 @@ export const PaymentForm = ({
     cardholderName: false,
   });
 
-  const { validation, validateCardNumber, validateExpiryDate, validateSecurityCode, validateCardholderName, detectCardType } =
+  const { validateCardNumber, validateExpiryDate, validateSecurityCode, validateCardholderName } =
     useCardValidation();
 
-  const { handleCardNumberChange, handleExpiryDateChange, handleSecurityCodeChange, getRawDigits } = useCardFormatter();
+  const { handleCardNumberChange, handleExpiryDateChange, handleSecurityCodeChange, getRawDigits, detectCardType } = useCardFormatter();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -121,7 +121,23 @@ export const PaymentForm = ({
   };
 
   const cardType = detectCardType(getRawDigits(formData.cardNumber));
-  const showError = (field: keyof typeof touched) => touched[field] && !validation[field].isValid;
+  
+  // Get validation results for each field
+  const cardValidation = validateCardNumber(getRawDigits(formData.cardNumber));
+  const expiryValidation = validateExpiryDate(getRawDigits(formData.expiryDate));
+  const cvcValidation = validateSecurityCode(formData.securityCode, cardType);
+  const nameValidation = validateCardholderName(formData.cardholderName);
+  
+  const showError = (field: keyof typeof touched) => {
+    if (!touched[field]) return false;
+    switch (field) {
+      case 'cardNumber': return !cardValidation.isValid;
+      case 'expiryDate': return !expiryValidation.isValid;
+      case 'securityCode': return !cvcValidation.isValid;
+      case 'cardholderName': return !nameValidation.isValid;
+      default: return false;
+    }
+  };
 
   const inputClasses = (field: keyof typeof touched) =>
     `w-full px-4 py-3 border ${
@@ -155,7 +171,7 @@ export const PaymentForm = ({
             </div>
           </div>
           {showError('cardNumber') && (
-            <p className="text-xs text-red-500 mt-1">{validation.cardNumber.error}</p>
+            <p className="text-xs text-red-500 mt-1">{cardValidation.error}</p>
           )}
         </div>
 
@@ -173,7 +189,7 @@ export const PaymentForm = ({
               className={inputClasses('expiryDate')}
             />
             {showError('expiryDate') && (
-              <p className="text-xs text-red-500 mt-1">{validation.expiryDate.error}</p>
+              <p className="text-xs text-red-500 mt-1">{expiryValidation.error}</p>
             )}
           </div>
           <div>
@@ -193,7 +209,7 @@ export const PaymentForm = ({
               </div>
             </div>
             {showError('securityCode') && (
-              <p className="text-xs text-red-500 mt-1">{validation.securityCode.error}</p>
+              <p className="text-xs text-red-500 mt-1">{cvcValidation.error}</p>
             )}
           </div>
         </div>
@@ -211,7 +227,7 @@ export const PaymentForm = ({
             className={inputClasses('cardholderName')}
           />
           {showError('cardholderName') && (
-            <p className="text-xs text-red-500 mt-1">{validation.cardholderName.error}</p>
+            <p className="text-xs text-red-500 mt-1">{nameValidation.error}</p>
           )}
         </div>
 

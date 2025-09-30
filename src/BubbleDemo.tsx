@@ -3,7 +3,7 @@
  * Quick demo to test the integration
  */
 
-import { BubbleLanding } from '../alimonyapp/componets/childcare';
+import { BubbleLanding } from '../ui/components/childcare';
 import { Baby, GraduationCap, Shield, HeartHandshake, Rainbow, Puzzle, Rocket } from 'lucide-react';
 
 export const BubbleDemo = () => {

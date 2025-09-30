@@ -70,7 +70,7 @@ export const PaymentCompletion: React.FC<PaymentCompletionProps> = ({
                   cardNumber={cardData.cardNumber}
                   cardholderName={cardData.cardholderName}
                   expiryDate={cardData.expiryDate}
-                  cardType={cardType}
+                  cardType={cardType === 'unknown' ? 'generic' : cardType}
                   maskNumber={maskCardNumber}
                 />
               </div>

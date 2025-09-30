@@ -31,7 +31,6 @@ export type {
   PaymentFormProps,
   PaymentFormData,
   OrderSummaryProps,
-  OrderSummary,
   OrderItem,
   PaymentResult,
   PaymentMethod,

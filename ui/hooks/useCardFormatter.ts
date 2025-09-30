@@ -6,10 +6,27 @@
 import { useCallback } from 'react';
 
 type CVCLength = 3 | 4;
+type CardType = 'visa' | 'mastercard' | 'amex' | 'discover' | 'unknown';
 
 const getGroupsOfFour = (digits: string): string => {
   const groups = digits.match(/.{1,4}/g);
   return groups ? groups.join(' ') : digits;
+};
+
+const detectCardTypeFromNumber = (cardNumber: string): CardType => {
+  const digits = cardNumber.replace(/\D/g, '');
+  
+  if (digits.match(/^4/)) {
+    return 'visa';
+  } else if (digits.match(/^5[1-5]/) || digits.match(/^2[2-7]/)) {
+    return 'mastercard';
+  } else if (digits.match(/^3[47]/)) {
+    return 'amex';
+  } else if (digits.match(/^6011/) || digits.match(/^65/)) {
+    return 'discover';
+  }
+  
+  return 'unknown';
 };
 
 export const useCardFormatter = () => {
@@ -56,6 +73,8 @@ export const useCardFormatter = () => {
     [formatCVC]
   );
 
+  const detectCardType = useCallback((cardNumber: string) => detectCardTypeFromNumber(cardNumber), []);
+
   return {
     formatCardNumber,
     formatExpiryDate,
@@ -63,6 +82,7 @@ export const useCardFormatter = () => {
     handleCardNumberChange,
     handleExpiryDateChange,
     handleSecurityCodeChange,
+    detectCardType,
     getRawDigits,
   };
 };

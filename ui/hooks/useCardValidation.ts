@@ -146,11 +146,23 @@ export const useCardValidation = () => {
     return sum % 10 === 0;
   };
 
+  // Alias for consistency with legacy naming
+  const validateSecurityCode = validateCVC;
+
   return {
     validateCardholderName,
     validateCardNumber,
     validateExpiryDate,
     validateCVC,
+    validateSecurityCode,
     validateCountry,
+    validation: {
+      validateCardholderName,
+      validateCardNumber,
+      validateExpiryDate,
+      validateCVC,
+      validateSecurityCode,
+      validateCountry,
+    }
   };
 };

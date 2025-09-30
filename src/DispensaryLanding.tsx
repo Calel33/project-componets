@@ -18,8 +18,8 @@ import {
   ThumbsUp,
   MapPin,
 } from 'lucide-react';
-import { BentoCard } from '../alimonyapp/componets/medical/BentoCard';
-import { useScrollAnimation } from '../alimonyapp/componets/medical/hooks/useScrollAnimation';
+import { BentoCard } from '../ui/components/medical/BentoCard';
+import { useScrollAnimation } from '../ui/components/medical/hooks/useScrollAnimation';
 
 export const DispensaryLanding: React.FC = () => {
   const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation();
