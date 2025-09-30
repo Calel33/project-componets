@@ -1,48 +1,40 @@
-/**
- * UI Component Library - Main Entry Point
- * Barrel export for all reusable UI components
- * 
- * Note: Due to naming conflicts across domains (e.g., FeatureCardProps, StatCardProps),
- * it's recommended to import directly from domain folders:
- * 
- * @example
- * // Recommended - Import from specific domain
- * import { FeatureGrid } from '@/ui/components/feature-grid';
- * import { FeatureCardProps } from '@/ui/components/feature-grid/types';
- * 
- * // Alternative - Import from namespaced exports
- * import * as Childcare from '@/ui/components/childcare';
- * import * as Nova from '@/ui/components/nova';
- * 
- * @module ui
- */
+// Main barrel export for the component library
+// Usage: import { DoctorCard } from '@your-package/digital-health'
 
-// Re-export domain modules as namespaces to avoid conflicts
-export * as Auth from './components/auth';
-export * as Childcare from './components/childcare';
-export * as DeFiEarn from './components/defi-earn';
-export * as FeatureGrid from './components/feature-grid';
-export * as Footer from './components/footer';
-export * as InteractiveStudio from './components/interactive-studio';
-export * as Medical from './components/medical';
-export * as Nova from './components/nova';
-export * as Onboarding from './components/onboarding';
-export * as Payment from './components/payment';
-export * as Portfolio from './components/portfolio';
-export * as Restaurant from './components/restaurant';
-export * as Storytelling from './components/storytelling';
-export * as Unboxing from './components/unboxing';
-export * as Web3 from './components/web3';
-export * as WebGL from './components/webgl';
-export * as Skincare from './components/skincare';
+// Digital Health Components
+export * from './components/digital-health';
 
-// Shared Hooks (no conflicts)
-export { useCardFormatter } from './hooks/useCardFormatter';
-export { useCardValidation } from './hooks/useCardValidation';
-export { useChartSetup } from './hooks/useChartSetup';
-export { useScrollToTop } from './hooks/useScrollToTop';
-export { useWebGLShader } from './hooks/useWebGLShader';
-export { useScrollAnimation } from './hooks/useScrollAnimation';
-export { useCart } from './hooks/useCart';
-export { useTheme } from './hooks/useTheme';
-export { useParallax } from './hooks/useParallax';
+// Payment Components
+export * from './components/payment';
+
+// Dashboard Components
+export * from './components/dashboard-sidebar';
+export * from './components/dashboard';
+export * from './components/defi-earn';
+
+// Auth Components
+export * from './components/auth';
+
+// Domain Components
+export * from './components/childcare';
+export * from './components/medical';
+export * from './components/web3';
+export * from './components/automotive';
+export * from './components/creative-studio';
+export * from './components/nova';
+export * from './components/restaurant';
+export * from './components/skincare';
+export * from './components/portfolio';
+
+// UI Components
+export * from './components/feature-grid';
+export * from './components/footer';
+export * from './components/interactive-studio';
+export * from './components/onboarding';
+export * from './components/storytelling';
+export * from './components/testimonials';
+export * from './components/unboxing';
+export * from './components/webgl';
+
+// Shared Hooks
+export * from './hooks';
