@@ -3,6 +3,7 @@
 ## Overview
 
 This guide shows how to convert your component library into a distributable npm package that can be used in any React project.
+Then anyone can use: npm install project-componet
 
 ---
 
