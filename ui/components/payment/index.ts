@@ -26,6 +26,12 @@ export { SuccessIcon } from './SuccessIcon';
 export { PaymentDetailsPanel } from './PaymentDetailsPanel';
 export { ConfirmationActions } from './ConfirmationActions';
 
+// FlowPay Landing Page Components
+export { FlowPayHero } from './FlowPayHero';
+export { PaymentFeatureGrid } from './PaymentFeatureGrid';
+export { PaymentTestimonials } from './PaymentTestimonials';
+export { GlassCard } from './GlassCard';
+
 export type {
   PaymentDashboardProps,
   PaymentFormProps,
@@ -53,4 +59,11 @@ export type {
   SuccessIconProps,
   PaymentDetailsPanelProps,
   ConfirmationActionsProps,
+  FlowPayHeroProps,
+  PaymentCardData,
+  PaymentFeatureGridProps,
+  Feature,
+  PaymentTestimonialsProps,
+  Stat,
+  GlassCardProps,
 } from './types';
