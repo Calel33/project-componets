@@ -253,3 +253,88 @@ export interface ConfirmationActionsProps {
   dismissLabel?: string;
   className?: string;
 }
+
+
+// ========================================
+// FlowPay Landing Page Types
+// ========================================
+
+export interface FlowPayHeroProps {
+  badge?: {
+    icon?: ReactNode;
+    text: string;
+  };
+  headline: string;
+  highlightedText: string;
+  description: string;
+  primaryCta: {
+    text: string;
+    href: string;
+    icon?: ReactNode;
+  };
+  secondaryCta?: {
+    text: string;
+    href: string;
+    icon?: ReactNode;
+  };
+  cards?: PaymentCardData[];
+  showGridBackground?: boolean;
+  className?: string;
+}
+
+export interface PaymentCardData {
+  number: string;
+  cardholderName: string;
+  expiryDate: string;
+  type: 'visa' | 'mastercard' | 'amex' | 'discover' | 'generic';
+  variant?: 'standard' | 'premium' | 'pro';
+  rotation?: number;
+  gradient?: string;
+  icon?: 'wifi' | 'contactless' | 'smartphone';
+}
+
+export interface PaymentFeatureGridProps {
+  headline: string;
+  description: string;
+  features: Feature[];
+  className?: string;
+}
+
+export interface Feature {
+  icon: ReactNode;
+  title: string;
+  description: string;
+  gradient?: string;
+}
+
+export interface PaymentTestimonialsProps {
+  testimonial: {
+    rating: number;
+    quote: string;
+    content: string;
+    author: {
+      name: string;
+      role: string;
+      avatar: string;
+    };
+  };
+  stats: Stat[];
+  className?: string;
+}
+
+export interface Stat {
+  icon: ReactNode;
+  label: string;
+  value: string;
+  subtitle: string;
+  gradient?: string;
+}
+
+export interface GlassCardProps {
+  children: ReactNode;
+  gradient?: string;
+  glow?: boolean;
+  hover?: boolean;
+  className?: string;
+  onClick?: () => void;
+}

@@ -360,3 +360,275 @@ function PaymentFlow() {
   );
 }
 ```
+
+## FlowPay Landing Page Components
+
+Modern, dark-themed landing page components with glass-morphism effects and animated payment cards. Perfect for fintech, payment platforms, and SaaS landing pages.
+
+### 4. FlowPayHero
+Hero section with animated 3D payment cards and gradient text effects.
+
+**Features:**
+- Animated floating payment cards with rotation
+- Customizable badge with icon
+- Dual CTA buttons (primary + secondary)
+- Gradient text highlighting
+- Optional grid background overlay
+- Staggered fade-in animations
+
+**Props:**
+```typescript
+interface FlowPayHeroProps {
+  badge?: {
+    icon?: ReactNode;
+    text: string;
+  };
+  headline: string;
+  highlightedText: string;
+  description: string;
+  primaryCta: {
+    text: string;
+    href: string;
+    icon?: ReactNode;
+  };
+  secondaryCta?: {
+    text: string;
+    href: string;
+    icon?: ReactNode;
+  };
+  cards?: PaymentCardData[];
+  showGridBackground?: boolean;
+  className?: string;
+}
+```
+
+**Usage:**
+```tsx
+import { FlowPayHero } from '@/ui/components/payment';
+import { ArrowRight, Play, Sparkles } from 'lucide-react';
+
+<FlowPayHero
+  badge={{
+    icon: <Sparkles className="w-4 h-4" />,
+    text: "New: Instant crypto payments now available"
+  }}
+  headline="Digital payments"
+  highlightedText="reimagined"
+  description="Experience the future of finance with instant transfers, smart contracts, and seamless global payments."
+  primaryCta={{
+    text: "Start building",
+    href: "#",
+    icon: <ArrowRight className="w-5 h-5" />
+  }}
+  secondaryCta={{
+    text: "Watch demo",
+    href: "#",
+    icon: <Play className="w-5 h-5" />
+  }}
+/>
+```
+
+### 5. PaymentFeatureGrid
+Three-column feature grid with glass-morphism cards and hover effects.
+
+**Features:**
+- Responsive grid layout (1 col mobile, 3 col desktop)
+- Glass-effect cards with backdrop blur
+- Icon containers with gradient backgrounds
+- Hover scale animations
+- Centered headline and description
+
+**Props:**
+```typescript
+interface PaymentFeatureGridProps {
+  headline: string;
+  description: string;
+  features: Feature[];
+  className?: string;
+}
+
+interface Feature {
+  icon: ReactNode;
+  title: string;
+  description: string;
+  gradient?: string;
+}
+```
+
+**Usage:**
+```tsx
+import { PaymentFeatureGrid } from '@/ui/components/payment';
+import { Zap, Shield, Globe } from 'lucide-react';
+
+<PaymentFeatureGrid
+  headline="Built for modern businesses"
+  description="Powerful APIs, instant settlements, and enterprise-grade security."
+  features={[
+    {
+      icon: <Zap className="w-6 h-6 text-white" />,
+      title: "Lightning Fast",
+      description: "Process payments in milliseconds with our optimized infrastructure."
+    },
+    {
+      icon: <Shield className="w-6 h-6 text-white" />,
+      title: "Bank-Grade Security",
+      description: "End-to-end encryption, fraud detection, and global compliance."
+    },
+    {
+      icon: <Globe className="w-6 h-6 text-white" />,
+      title: "Global Coverage",
+      description: "Accept payments from 150+ countries with automatic conversion."
+    }
+  ]}
+/>
+```
+
+### 6. PaymentTestimonials
+Testimonial section with customer quote and stat cards.
+
+**Features:**
+- Large testimonial card (2/3 width)
+- Star rating display
+- Author avatar and credentials
+- Stat cards with icons
+- Responsive two-column layout
+
+**Props:**
+```typescript
+interface PaymentTestimonialsProps {
+  testimonial: {
+    rating: number;
+    quote: string;
+    content: string;
+    author: {
+      name: string;
+      role: string;
+      avatar: string;
+    };
+  };
+  stats: Stat[];
+  className?: string;
+}
+
+interface Stat {
+  icon: ReactNode;
+  label: string;
+  value: string;
+  subtitle: string;
+  gradient?: string;
+}
+```
+
+**Usage:**
+```tsx
+import { PaymentTestimonials } from '@/ui/components/payment';
+import { TrendingUp, Users } from 'lucide-react';
+
+<PaymentTestimonials
+  testimonial={{
+    rating: 5,
+    quote: "FlowPay transformed how we handle payments",
+    content: "The integration was seamless, and our conversion rates improved by 40%.",
+    author: {
+      name: "Marcus Johnson",
+      role: "CTO at TechFlow",
+      avatar: "https://example.com/avatar.jpg"
+    }
+  }}
+  stats={[
+    {
+      icon: <TrendingUp className="w-8 h-8 text-white" />,
+      label: "Transaction Volume",
+      value: "$2.4B",
+      subtitle: "processed monthly"
+    },
+    {
+      icon: <Users className="w-8 h-8 text-white" />,
+      label: "Customer Satisfaction",
+      value: "98%",
+      subtitle: "would recommend us"
+    }
+  ]}
+/>
+```
+
+### 7. GlassCard
+Reusable glass-morphism card component.
+
+**Features:**
+- Backdrop blur effect
+- Optional gradient overlay
+- Optional glow effect
+- Optional hover animations
+- Clickable with onClick handler
+
+**Props:**
+```typescript
+interface GlassCardProps {
+  children: ReactNode;
+  gradient?: string;
+  glow?: boolean;
+  hover?: boolean;
+  className?: string;
+  onClick?: () => void;
+}
+```
+
+**Usage:**
+```tsx
+import { GlassCard } from '@/ui/components/payment';
+
+<GlassCard
+  glow
+  hover
+  gradient="from-blue-500/20 via-purple-500/20 to-pink-500/20"
+  className="p-8"
+>
+  <h3 className="text-xl font-bold mb-4">Custom Content</h3>
+  <p>Any content you want in a glass card</p>
+</GlassCard>
+```
+
+## Complete Landing Page Example
+
+See `src/FlowPayDemo.tsx` for a complete implementation combining all FlowPay components into a production-ready landing page.
+
+```tsx
+import { FlowPayDemo } from '@/src/FlowPayDemo';
+
+// Full landing page with hero, features, testimonials, and footer
+<FlowPayDemo />
+```
+
+## Design System Compliance
+
+All FlowPay components follow the project design system:
+
+- **Typography**: System font stack with font-weight utilities
+- **Colors**: Dark theme with white text and blue/purple gradients
+- **Spacing**: Consistent padding and margins using Tailwind scale
+- **Animations**: Staggered fade-in, slide-up, and scale-in effects
+- **Glass Effects**: Backdrop blur with rgba backgrounds
+- **Responsive**: Mobile-first with sm/md/lg breakpoints
+
+## Accessibility
+
+- **Semantic HTML**: Proper heading hierarchy, section landmarks
+- **ARIA Labels**: All interactive elements have descriptive labels
+- **Keyboard Navigation**: Full tab navigation support
+- **Focus States**: Visible focus indicators on all interactive elements
+- **Color Contrast**: WCAG 2.1 AA compliant text contrast ratios
+- **Reduced Motion**: Respects `prefers-reduced-motion` user preference
+
+## Browser Support
+
+- Chrome/Edge 90+
+- Firefox 88+
+- Safari 14+
+- Supports backdrop-filter (glass effect)
+
+## Related Documentation
+
+- [Payment Completion Usage Guide](./PAYMENT_COMPLETION_USAGE.md)
+- [Bill Payment Confirmation Usage](./BILL_PAYMENT_CONFIRMATION_USAGE.md)
+- [Design System Tokens](../../../design-system/design.md)
