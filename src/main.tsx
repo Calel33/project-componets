@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import UptownProteinDesignSystem from './UptownProteinDesignSystem';
+import EcommerceProductDemo from './EcommerceProductDemo';
 import './index.css';
+import './animations.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <UptownProteinDesignSystem />
+    <EcommerceProductDemo />
   </React.StrictMode>
 );
