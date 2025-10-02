@@ -85,4 +85,29 @@
 - **Component Library Guide**: `ui/README.md`.
 - **Workflow Prompts**: `.windsurf/commands/*.md` for integration templates and automation prompts.
 
+## CRITICAL: Use ripgrep, not grep
+
+NEVER use grep for project-wide searches (slow, ignores .gitignore). ALWAYS use rg.
+
+- `rg "pattern"` — search content
+- `rg --files | rg "name"` — find files
+- `rg -t python "def"` — language filters
+
+## File finding
+
+- Prefer `fd` (or `fdfind` on Debian/Ubuntu). Respects .gitignore.
+
+## JSON
+
+- Use `jq` for parsing and transformations.
+
+
+
+## Agent Instructions
+
+- Replace commands: grep→rg, find→rg --files/fd, ls -R→rg --files, cat|grep→rg pattern file
+- Cap reads at 250 lines you can read in chunks; prefer `rg -n -A 3 -B 3` for context
+- Use `jq` for JSON instead of regex
+
+
 Keep this guide current. Amend alongside constitution updates and document sync impacts in commit messages (e.g., `docs: refresh agent guide for new payment slice`).
