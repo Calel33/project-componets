@@ -1,11 +1,12 @@
 import React from 'react';
 import { FeaturesGridLayout } from '@/ui/components/feature-grid';
+import type { FeatureCardProps } from '@/ui/components/feature-grid';
 import { Bolt, Shield, Bell, Globe, UserRound, BarChart } from 'lucide-react';
 
 const iconClass = 'w-8 h-8';
 
 const FeaturesGridDemo: React.FC = () => {
-  const features = [
+  const features: FeatureCardProps[] = [
     {
       icon: <Bolt className={iconClass} />,
       title: 'Always On',
