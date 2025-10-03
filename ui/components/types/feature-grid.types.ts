@@ -37,3 +37,20 @@ export interface FeatureGridProps {
   columns?: 2 | 3 | 4;
   className?: string;
 }
+
+// New, lightweight card + layout types for FeaturesGridLayout
+export interface FeatureCardProps {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  variant?: 'default' | 'highlight';
+  badge?: string;
+  iconColor?: string; // tailwind class or style token name
+}
+
+export interface FeaturesGridLayoutProps {
+  features: FeatureCardProps[];
+  columns?: 3 | 4;
+  gridStyle?: 'bento' | 'uniform';
+  className?: string;
+}

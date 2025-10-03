@@ -153,15 +153,45 @@ fontFamily: {
 
 See `USAGE_EXAMPLE.tsx` for a complete working example with sample data.
 
+### FeaturesGridLayout (Bento/Uniform)
+
+A simpler, token-compliant features grid extracted from the reference HTML (ideas/Features Grid Layout.html). Supports a bento-style first row and uniform grid variant.
+
+```tsx
+import { FeaturesGridLayout } from '@/ui/components/feature-grid';
+import type { FeatureCardProps } from '@/ui/components/feature-grid';
+import { Bolt, Shield, Bell, Globe, UserRound, BarChart } from 'lucide-react';
+
+const features: FeatureCardProps[] = [
+  { icon: <Bolt className="w-8 h-8" />, title: 'Always On', description: 'Reliable uptime 99.99% for all users.', iconColor: 'text-indigo-400' },
+  { icon: <BarChart className="w-8 h-8" />, title: 'Advanced Analytics', description: 'Powerful insights help you understand your users…', variant: 'highlight', badge: 'New', iconColor: 'text-blue-400' },
+  { icon: <Shield className="w-8 h-8" />, title: 'Secure Data', description: 'AES-256 encryption by default.', iconColor: 'text-red-400' },
+  { icon: <Bell className="w-8 h-8" />, title: '24/7 Support', description: 'Always here for you.', iconColor: 'text-yellow-300' },
+  { icon: <Shield className="w-8 h-8" />, title: 'Easy Integrations', description: 'Works with your tools.', iconColor: 'text-green-400' },
+  { icon: <Globe className="w-8 h-8" />, title: 'Global Reach', description: 'Worldwide infrastructure.', iconColor: 'text-blue-300' },
+  { icon: <UserRound className="w-8 h-8" />, title: 'User Friendly', description: 'Simple to get started.', iconColor: 'text-pink-300' },
+];
+
+export default function Demo() {
+  return (
+    <div className="py-12">
+      <FeaturesGridLayout features={features} gridStyle="bento" />
+    </div>
+  );
+}
+```
+
 ## File Structure
 
 ```
 feature-grid/
-├── FeatureGrid.tsx      # Main component
-├── types.ts             # TypeScript interfaces
-├── index.ts             # Exports
-├── USAGE_EXAMPLE.tsx    # Example implementation
-└── README.md            # Documentation
+├── FeatureGrid.tsx         # Main component
+├── FeaturesGridLayout.tsx  # Bento/uniform layout variant
+├── FeatureCard.tsx         # Card primitive used by layout
+├── types.ts                # TypeScript Interfaces
+├── index.ts                # Exports
+├── USAGE_EXAMPLE.tsx       # Example implementation
+└── README.md               # Documentation
 ```
 
 ## Browser Support
