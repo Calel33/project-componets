@@ -12,4 +12,8 @@ export { FAQSection } from './FAQSection';
 export { AuraFooter } from './AuraFooter';
 export { AuraLanding } from './AuraLanding';
 
+// Grid Background Navigation components
+export { GridHero } from './GridHero';
+export { InfoCard } from './InfoCard';
+
 export * from './types';
