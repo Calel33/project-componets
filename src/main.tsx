@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import ChatSupportDemo from './ChatSupportDemo';
+import CampingExperienceDemo from './CampingExperienceDemo';
 import './index.css';
 import './animations.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ChatSupportDemo />
+    <CampingExperienceDemo />
   </React.StrictMode>
 );
