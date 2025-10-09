@@ -141,20 +141,20 @@ export const PaymentForm = ({
 
   const inputClasses = (field: keyof typeof touched) =>
     `w-full px-4 py-3 border ${
-      showError(field) ? 'border-red-500' : 'border-gray-300'
-    } rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition`;
+      showError(field) ? 'border-destructive' : 'border-border/40'
+    } rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition bg-card text-foreground placeholder:text-muted-foreground/70`;
 
   return (
     <div className={className}>
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-800">{title}</h2>
-        <p className="text-gray-500 mt-2">{subtitle}</p>
+        <h2 className="text-2xl font-bold text-foreground">{title}</h2>
+        <p className="text-muted-foreground mt-2">{subtitle}</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Card Number */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Card number</label>
+          <label className="block text-sm font-medium text-foreground mb-1">Card number</label>
           <div className="relative">
             <input
               type="text"
@@ -171,14 +171,14 @@ export const PaymentForm = ({
             </div>
           </div>
           {showError('cardNumber') && (
-            <p className="text-xs text-red-500 mt-1">{cardValidation.error}</p>
+            <p className="text-xs text-destructive mt-1">{cardValidation.error}</p>
           )}
         </div>
 
         {/* Expiry and CVV */}
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Expiration date</label>
+            <label className="block text-sm font-medium text-foreground mb-1">Expiration date</label>
             <input
               type="text"
               placeholder="MM / YY"
@@ -189,11 +189,11 @@ export const PaymentForm = ({
               className={inputClasses('expiryDate')}
             />
             {showError('expiryDate') && (
-              <p className="text-xs text-red-500 mt-1">{expiryValidation.error}</p>
+              <p className="text-xs text-destructive mt-1">{expiryValidation.error}</p>
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Security code</label>
+            <label className="block text-sm font-medium text-foreground mb-1">Security code</label>
             <div className="relative">
               <input
                 type="text"
@@ -204,19 +204,19 @@ export const PaymentForm = ({
                 disabled={formState.status === 'loading'}
                 className={inputClasses('securityCode')}
               />
-              <div className="absolute right-3 top-3 text-gray-400">
+              <div className="absolute right-3 top-3 text-muted-foreground">
                 <HelpCircle className="w-5 h-5" />
               </div>
             </div>
             {showError('securityCode') && (
-              <p className="text-xs text-red-500 mt-1">{cvcValidation.error}</p>
+              <p className="text-xs text-destructive mt-1">{cvcValidation.error}</p>
             )}
           </div>
         </div>
 
         {/* Cardholder Name */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Name on card</label>
+          <label className="block text-sm font-medium text-foreground mb-1">Name on card</label>
           <input
             type="text"
             placeholder="Your name"
@@ -227,7 +227,7 @@ export const PaymentForm = ({
             className={inputClasses('cardholderName')}
           />
           {showError('cardholderName') && (
-            <p className="text-xs text-red-500 mt-1">{nameValidation.error}</p>
+            <p className="text-xs text-destructive mt-1">{nameValidation.error}</p>
           )}
         </div>
 
@@ -236,20 +236,20 @@ export const PaymentForm = ({
           <button
             type="submit"
             disabled={formState.status === 'loading'}
-            className="w-full bg-indigo-600 text-white py-3 px-4 rounded-lg hover:bg-indigo-700 transition font-medium flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-primary text-primary-foreground py-3 px-4 rounded-lg hover:bg-primary/90 transition font-medium flex items-center justify-center disabled:opacity-60 disabled:cursor-not-allowed"
           >
             <span>{formState.status === 'loading' ? 'Processing...' : `Pay $${amount.toFixed(2)}`}</span>
             <Lock className="w-4 h-4 ml-2" />
           </button>
-          <p className="text-xs text-center text-gray-500 mt-3 flex items-center justify-center">
-            <Shield className="w-4 h-4 mr-1 text-gray-400" />
+          <p className="text-xs text-center text-muted-foreground mt-3 flex items-center justify-center">
+            <Shield className="w-4 h-4 mr-1 text-muted-foreground" />
             {securityMessage}
           </p>
           {formState.status === 'error' && formState.error && (
-            <p className="text-sm text-red-500 text-center mt-2">{formState.error}</p>
+            <p className="text-sm text-destructive text-center mt-2">{formState.error}</p>
           )}
           {formState.status === 'success' && (
-            <p className="text-sm text-green-500 text-center mt-2">Payment successful!</p>
+            <p className="text-sm text-secondary text-center mt-2">Payment successful!</p>
           )}
         </div>
       </form>

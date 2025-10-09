@@ -111,8 +111,8 @@ export const BillPaymentConfirmation: React.FC<BillPaymentConfirmationProps> = (
   const cardContent = (
     <div
       className={`
-        relative bg-slate-900 border border-neutral-700
-        max-w-sm w-full rounded-xl shadow-2xl overflow-hidden
+        relative bg-card border border-border/30
+        max-w-sm w-full rounded-[calc(var(--radius)*1.1)] shadow-2xl overflow-hidden
         transition-all duration-350
         ${isVisible && !isExiting ? 'opacity-100 scale-100' : 'opacity-0 scale-97'}
         ${variant === 'toast' ? 'max-w-sm' : ''}
@@ -126,19 +126,19 @@ export const BillPaymentConfirmation: React.FC<BillPaymentConfirmationProps> = (
         transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
       }}
     >
-      <div className="p-6 flex flex-col items-center">
+      <div className="p-6 flex flex-col items-center text-card-foreground">
         <SuccessIcon size="md" className="mb-4" />
         
         <h2
           id="confirmation-title"
-          className="text-gray-100 text-xl font-bold mb-1 text-center"
+          className="text-card-foreground text-xl font-bold mb-1 text-center"
         >
           {title}
         </h2>
         
         <p
           id="confirmation-message"
-          className="text-gray-400 text-sm text-center mb-5"
+          className="text-sm text-muted-foreground text-center mb-5"
         >
           {message}
         </p>
@@ -167,9 +167,9 @@ export const BillPaymentConfirmation: React.FC<BillPaymentConfirmationProps> = (
           aria-label="Close confirmation"
           className={`
             absolute top-3 right-3
-            text-gray-400 hover:text-gray-200
+            text-muted-foreground hover:text-card-foreground
             p-1 rounded transition-colors
-            focus:outline-none focus:ring-2 focus:ring-gray-500
+            focus:outline-none focus:ring-2 focus:ring-primary
           `}
         >
           <X className="h-5 w-5" />
@@ -184,7 +184,7 @@ export const BillPaymentConfirmation: React.FC<BillPaymentConfirmationProps> = (
       <div
         className={`
           fixed inset-0 z-50 flex items-center justify-center p-4
-          bg-black/50 backdrop-blur-sm
+          bg-background/70 backdrop-blur-sm
           transition-opacity duration-350
           ${isVisible && !isExiting ? 'opacity-100' : 'opacity-0'}
         `}

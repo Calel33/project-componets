@@ -13,11 +13,11 @@ export const PaymentDashboard = ({
   className = '',
 }: PaymentDashboardProps) => {
   return (
-    <div className={`min-h-screen flex items-center justify-center p-4 bg-gray-100 ${className}`}>
-      <div className="max-w-4xl w-full bg-white rounded-2xl shadow-lg overflow-hidden">
+    <div className={`min-h-screen flex items-center justify-center p-4 bg-muted ${className}`}>
+      <div className="max-w-4xl w-full bg-card text-foreground rounded-[calc(var(--radius)*1.5)] border border-border/20 shadow-lg overflow-hidden">
         <div className="md:flex">
           {/* Left Column: Payment Form */}
-          <div className="md:w-3/5 p-8">
+          <div className="md:w-3/5 p-8 bg-card">
             <PaymentForm
               title={title}
               subtitle={subtitle}

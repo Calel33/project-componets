@@ -181,7 +181,7 @@ export const EmailCompose: React.FC<EmailComposeProps> = ({
       <div className="max-w-7xl mx-auto bg-zinc-800 shadow-xl rounded-xl overflow-hidden my-4 md:my-6 border border-zinc-700">
         <ComposeHeader />
 
-        <section className="grid grid-cols-1 lg:grid-cols-12">
+        <section className="grid grid-cols-1 lg:grid-cols-12 min-h-screen">
           <ComposeSidebar
             lastSaved={draft.lastSaved}
             isSaving={isSaving}

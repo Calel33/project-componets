@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import CampingExperienceDemo from './CampingExperienceDemo';
+import { CandleStoreLanding } from './CandleStoreLanding';
 import './index.css';
 import './animations.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <CampingExperienceDemo />
+    <CandleStoreLanding />
   </React.StrictMode>
 );
