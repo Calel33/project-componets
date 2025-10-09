@@ -8,5 +8,5 @@
 
 ---
 
-_Generated: 9/29/2025, 7:33:20 PM_
+_Generated: 10/6/2025, 8:21:05 PM_
 _Source: moat-tasks-detail.json_

@@ -60,8 +60,8 @@ export const PaymentDetailsPanel: React.FC<PaymentDetailsPanelProps> = ({
   return (
     <div
       className={`
-        bg-neutral-800 rounded-lg w-full px-4 py-3
-        border border-neutral-700
+        bg-muted/40 rounded-lg w-full px-4 py-3
+        border border-border/30 text-card-foreground
         ${className}
       `}
       role="region"
@@ -75,8 +75,8 @@ export const PaymentDetailsPanel: React.FC<PaymentDetailsPanelProps> = ({
             ${index < detailItems.length - 1 ? 'mb-2' : ''}
           `}
         >
-          <span className="text-gray-400">{item.label}</span>
-          <span className="text-gray-100 font-semibold">
+          <span className="text-muted-foreground">{item.label}</span>
+          <span className="text-card-foreground font-semibold">
             {item.value}
           </span>
         </div>

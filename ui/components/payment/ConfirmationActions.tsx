@@ -51,12 +51,12 @@ export const ConfirmationActions: React.FC<ConfirmationActionsProps> = ({
           disabled={loading}
           className={`
             w-full py-2 px-4
-            bg-green-600 hover:bg-green-700
-            disabled:bg-green-600/50 disabled:cursor-not-allowed
-            text-white font-medium rounded-md
+            bg-secondary hover:bg-secondary/90
+            disabled:bg-secondary/60 disabled:cursor-not-allowed
+            text-secondary-foreground font-medium rounded-md
             transition-colors duration-200
             flex items-center justify-center gap-2
-            focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-slate-900
+            focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-background
           `}
           aria-label={loading ? 'Downloading receipt' : downloadLabel}
         >
@@ -79,11 +79,11 @@ export const ConfirmationActions: React.FC<ConfirmationActionsProps> = ({
         disabled={loading}
         className={`
           w-full py-2 px-4
-          bg-neutral-800 hover:bg-neutral-700
-          disabled:bg-neutral-800/50 disabled:cursor-not-allowed
-          text-gray-200 font-medium rounded-md
+          bg-muted hover:bg-muted/80
+          disabled:bg-muted/60 disabled:cursor-not-allowed
+          text-foreground font-medium rounded-md
           transition-colors duration-200
-          focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-slate-900
+          focus:outline-none focus:ring-2 focus:ring-muted-foreground/40 focus:ring-offset-2 focus:ring-offset-background
         `}
         aria-label={dismissLabel}
       >

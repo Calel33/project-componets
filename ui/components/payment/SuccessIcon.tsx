@@ -33,7 +33,7 @@ export const SuccessIcon: React.FC<SuccessIconProps> = ({
     <div
       className={`
         flex items-center justify-center
-        bg-green-500/10 rounded-full shadow-md
+        bg-secondary/15 rounded-full shadow-md
         ${sizeClasses[size]}
         ${className}
       `}
@@ -41,7 +41,7 @@ export const SuccessIcon: React.FC<SuccessIconProps> = ({
       aria-label="Success"
     >
       <CheckCircle 
-        className={`text-green-400 ${iconSizeClasses[size]}`}
+        className={`text-secondary ${iconSizeClasses[size]}`}
         strokeWidth={2}
       />
     </div>

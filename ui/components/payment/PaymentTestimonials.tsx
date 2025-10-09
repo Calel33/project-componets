@@ -11,7 +11,7 @@ export const PaymentTestimonials = ({
     return Array.from({ length: 5 }, (_, i) => (
       <Star
         key={i}
-        className={`w-5 h-5 ${i < rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-400'}`}
+        className={`w-5 h-5 ${i < rating ? 'fill-accent text-accent' : 'text-muted-foreground/40'}`}
       />
     ));
   };
@@ -21,15 +21,15 @@ export const PaymentTestimonials = ({
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
           <div className="lg:col-span-2">
-            <GlassCard className="p-8 lg:p-12">
+            <GlassCard className="group p-8 lg:p-12">
               <div className="flex items-center gap-2 mb-6">
                 <div className="flex items-center">{renderStars(testimonial.rating)}</div>
-                <span className="text-sm text-white/60">{testimonial.rating}.0</span>
+                <span className="text-sm text-muted-foreground">{testimonial.rating}.0</span>
               </div>
-              <h3 className="text-2xl lg:text-3xl mb-6 leading-tight font-bold text-white">
+              <h3 className="text-2xl lg:text-3xl mb-6 leading-tight font-bold text-card-foreground">
                 {testimonial.quote}
               </h3>
-              <p className="text-lg leading-relaxed mb-8 text-white/80">{testimonial.content}</p>
+              <p className="text-lg leading-relaxed mb-8 text-muted-foreground">{testimonial.content}</p>
               <div className="flex items-center gap-4">
                 <img
                   src={testimonial.author.avatar}
@@ -37,8 +37,8 @@ export const PaymentTestimonials = ({
                   className="w-12 h-12 rounded-full object-cover"
                 />
                 <div>
-                  <p className="font-medium text-white">{testimonial.author.name}</p>
-                  <p className="text-sm text-white/60">{testimonial.author.role}</p>
+                  <p className="font-medium text-card-foreground">{testimonial.author.name}</p>
+                  <p className="text-sm text-muted-foreground">{testimonial.author.role}</p>
                 </div>
               </div>
             </GlassCard>
@@ -46,13 +46,13 @@ export const PaymentTestimonials = ({
 
           <div className="space-y-8">
             {stats.map((stat, index) => (
-              <GlassCard key={index} className="p-8 text-center">
-                <div className="w-16 h-16 flex items-center justify-center bg-gradient-to-br from-blue-500/10 to-purple-500/20 rounded-full mx-auto mb-4 border border-white/10">
+              <GlassCard key={index} className="group p-8 text-center">
+                <div className="w-16 h-16 flex items-center justify-center rounded-full mx-auto mb-4 border border-border/30 bg-primary/10 text-primary">
                   {stat.icon}
                 </div>
-                <p className="text-sm font-medium mb-2 text-white/80">{stat.label}</p>
-                <p className="text-4xl mb-2 font-bold text-white">{stat.value}</p>
-                <p className="text-sm text-white/60">{stat.subtitle}</p>
+                <p className="text-sm font-medium mb-2 text-muted-foreground">{stat.label}</p>
+                <p className="text-4xl mb-2 font-bold text-card-foreground">{stat.value}</p>
+                <p className="text-sm text-muted-foreground">{stat.subtitle}</p>
               </GlassCard>
             ))}
           </div>

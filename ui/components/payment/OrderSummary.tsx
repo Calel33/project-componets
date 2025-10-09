@@ -11,8 +11,8 @@ export const OrderSummary = ({
   className = '',
 }: OrderSummaryProps) => {
   return (
-    <div className={`bg-gray-50 p-8 border-l border-gray-200 ${className}`}>
-      <h3 className="text-lg font-semibold text-gray-800 mb-6">Order summary</h3>
+    <div className={`bg-muted/60 p-8 border-l border-border/20 ${className}`}>
+      <h3 className="text-lg font-semibold text-foreground mb-6">Order summary</h3>
 
       {/* Order Items */}
       <div className="space-y-4 mb-6">
@@ -21,42 +21,42 @@ export const OrderSummary = ({
             <div className="flex items-center">
               <div
                 className={`h-12 w-12 rounded-md flex items-center justify-center ${
-                  item.iconBgColor || 'bg-indigo-100'
+                  item.iconBgColor || 'bg-primary/10'
                 }`}
               >
-                <div className={item.iconColor || 'text-indigo-500'}>{item.icon}</div>
+                <div className={item.iconColor || 'text-primary'}>{item.icon}</div>
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-800">{item.title}</p>
-                <p className="text-xs text-gray-500">{item.description}</p>
+                <p className="text-sm font-medium text-foreground">{item.title}</p>
+                <p className="text-xs text-muted-foreground">{item.description}</p>
               </div>
             </div>
-            <p className="text-sm font-medium text-gray-800">${item.price.toFixed(2)}</p>
+            <p className="text-sm font-medium text-foreground">${item.price.toFixed(2)}</p>
           </div>
         ))}
       </div>
 
       {/* Subtotal and Tax */}
-      <div className="border-t border-gray-200 pt-4 mb-6">
+      <div className="border-t border-border/20 pt-4 mb-6">
         <div className="flex justify-between mb-2">
-          <p className="text-sm text-gray-600">Subtotal</p>
-          <p className="text-sm font-medium text-gray-800">${subtotal.toFixed(2)}</p>
+          <p className="text-sm text-muted-foreground">Subtotal</p>
+          <p className="text-sm font-medium text-foreground">${subtotal.toFixed(2)}</p>
         </div>
         <div className="flex justify-between">
-          <p className="text-sm text-gray-600">Tax</p>
-          <p className="text-sm font-medium text-gray-800">${tax.toFixed(2)}</p>
+          <p className="text-sm text-muted-foreground">Tax</p>
+          <p className="text-sm font-medium text-foreground">${tax.toFixed(2)}</p>
         </div>
       </div>
 
       {/* Total */}
-      <div className="border-t border-gray-200 pt-4">
+      <div className="border-t border-border/20 pt-4">
         <div className="flex justify-between">
-          <p className="text-base font-medium text-gray-800">Total</p>
-          <p className="text-base font-bold text-gray-800">${total.toFixed(2)}</p>
+          <p className="text-base font-medium text-foreground">Total</p>
+          <p className="text-base font-bold text-foreground">${total.toFixed(2)}</p>
         </div>
-        <p className="text-xs text-gray-500 mt-2">
+        <p className="text-xs text-muted-foreground mt-2">
           By completing this purchase you agree to our{' '}
-          <a href={termsLink} className="text-indigo-600 hover:text-indigo-500">
+          <a href={termsLink} className="text-primary hover:text-primary/80">
             terms and conditions
           </a>
         </p>

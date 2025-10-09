@@ -36,5 +36,8 @@ export * from './components/testimonials';
 export * from './components/unboxing';
 export * from './components/webgl';
 
+// Product Components
+export * from './components/product';
+
 // Shared Hooks
 export * from './hooks';

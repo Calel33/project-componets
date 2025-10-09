@@ -8,10 +8,10 @@ export const GlassCard = ({
   className = '',
   onClick,
 }: GlassCardProps) => {
-  const baseClasses = 'rounded-2xl backdrop-blur-xl border border-white/10';
-  const glassEffect = 'bg-white/5';
-  const glowEffect = glow ? 'shadow-[0_0_40px_rgba(59,130,246,0.1),0_0_80px_rgba(120,119,198,0.05)]' : '';
-  const hoverEffect = hover ? 'transition-all duration-300 hover:bg-white/10' : '';
+  const baseClasses = 'rounded-2xl backdrop-blur-xl border border-border/30';
+  const glassEffect = 'bg-card/10 text-card-foreground relative overflow-hidden';
+  const glowEffect = glow ? 'shadow-lg ring-1 ring-primary/20' : '';
+  const hoverEffect = hover ? 'transition-all duration-300 hover:bg-card/20' : '';
   const cursorStyle = onClick ? 'cursor-pointer' : '';
 
   return (
@@ -20,7 +20,7 @@ export const GlassCard = ({
       onClick={onClick}
     >
       {gradient && (
-        <div className="absolute inset-0 bg-gradient-to-br opacity-20 rounded-2xl" style={{ background: gradient }} />
+        <div className="absolute inset-0 rounded-2xl opacity-20" style={{ background: gradient }} />
       )}
       <div className="relative">{children}</div>
     </div>
