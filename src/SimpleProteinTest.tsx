@@ -37,7 +37,7 @@ const subtotal = proteinProducts.reduce((sum, item) => sum + item.price, 0);
 const tax = subtotal * 0.08;
 const total = subtotal + tax;
 
-const handlePayment = async (data: PaymentFormData): Promise<PaymentResult> => {
+const handlePayment = async (_data: PaymentFormData): Promise<PaymentResult> => {
   await new Promise((resolve) => setTimeout(resolve, 1000));
   return {
     success: true,

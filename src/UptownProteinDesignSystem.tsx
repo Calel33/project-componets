@@ -1,8 +1,8 @@
 // UptownProteinDesignSystem.tsx - Using ACTUAL design system tokens
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { OrderSummary, MeshGradientBackground } from '../ui/components/payment';
 import type { OrderItem } from '../ui/components/payment/types';
-import { Zap, Droplet, Flame, Sparkles, ShieldCheck, Star, Award, Leaf, Timer, Heart, TrendingUp, Package, Lock, Moon, Sun } from 'lucide-react';
+import { Zap, Droplet, Flame, Sparkles, ShieldCheck, Star, Award, Leaf, Timer, Heart, Lock, Moon, Sun } from 'lucide-react';
 import { useScrollAnimation } from '../ui/hooks/useScrollAnimation';
 import { useTheme } from '../ui/hooks/useTheme';
 

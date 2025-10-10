@@ -338,3 +338,24 @@ export interface GlassCardProps {
   className?: string;
   onClick?: () => void;
 }
+
+// ========================================
+// Virtual Payment Card Types
+// ========================================
+
+export interface VirtualCardData {
+  cardNumber: string; // Full number (masked display)
+  cardHolder: string;
+  expiryMonth: string;
+  expiryYear: string;
+  cvv: string;
+  cardId: string;
+  issuer: string;
+}
+
+export interface VirtualPaymentCardProps {
+  cardData: VirtualCardData;
+  onFlip?: (showingBack: boolean) => void;
+  enableFlip?: boolean;
+  className?: string;
+}

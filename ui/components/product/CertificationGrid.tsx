@@ -10,12 +10,12 @@ export const CertificationGrid: React.FC<CertificationGridProps> = ({
       {certifications.map((cert, index) => (
         <div
           key={index}
-          className="rounded-lg bg-white/5 p-3 ring-1 ring-white/10 hover:bg-white/10 hover:ring-emerald-400/40 transition-all duration-300 cursor-pointer group"
+          className="rounded-lg bg-white/5 p-3 ring-1 ring-white/10"
         >
-          <div className="text-sm font-medium text-white font-sans group-hover:text-emerald-300 transition-colors">
+          <div className="text-sm font-medium text-white font-sans">
             {cert.title}
           </div>
-          <div className="text-xs text-neutral-400 font-sans group-hover:text-neutral-300 transition-colors">
+          <div className="text-xs text-neutral-400 font-sans">
             {cert.subtitle}
           </div>
         </div>

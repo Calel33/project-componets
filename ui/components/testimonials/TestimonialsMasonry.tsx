@@ -6,9 +6,9 @@ export const TestimonialsMasonry: React.FC<TestimonialsMasonryProps> = ({
   title = "Loved by teams worldwide",
   subtitle = "We partner with forward-thinking companies to craft digital products.",
   testimonials,
-  showParticles = true,
+  showParticles: _showParticles = true,
   showCTA = true,
-  staggerAnimation = true,
+  staggerAnimation: _staggerAnimation = true,
   className = '' 
 }) => {
   return (

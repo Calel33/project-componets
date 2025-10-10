@@ -32,6 +32,11 @@ export { PaymentFeatureGrid } from './PaymentFeatureGrid';
 export { PaymentTestimonials } from './PaymentTestimonials';
 export { GlassCard } from './GlassCard';
 
+// Virtual Payment Card Components
+export { VirtualPaymentCard } from './VirtualPaymentCard';
+export { CardFront } from './CardFront';
+export { CardBack } from './CardBack';
+
 export type {
   PaymentDashboardProps,
   PaymentFormProps,
@@ -66,4 +71,6 @@ export type {
   PaymentTestimonialsProps,
   Stat,
   GlassCardProps,
+  VirtualCardData,
+  VirtualPaymentCardProps,
 } from './types';

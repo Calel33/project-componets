@@ -1,8 +1,8 @@
 // UptownProteinSimple.tsx - Uptown Protein Payment with Design System
-import { useState } from 'react';
+// no local state required
 import { OrderSummary, MeshGradientBackground } from '../ui/components/payment';
 import type { OrderItem } from '../ui/components/payment/types';
-import { Zap, Droplet, Flame, Sparkles, ShieldCheck, Star, Award, Leaf, Timer, Heart, TrendingUp, Package, Lock, CheckCircle } from 'lucide-react';
+import { Zap, Droplet, Flame, Sparkles, ShieldCheck, Star, Award, Leaf, Timer, Heart } from 'lucide-react';
 import { useScrollAnimation } from '../ui/hooks/useScrollAnimation';
 
 const proteinProducts: OrderItem[] = [
@@ -49,11 +49,9 @@ const tax = subtotal * 0.08;
 const total = subtotal + tax;
 
 export default function UptownProteinSimple() {
-  const [email, setEmail] = useState('');
-  const [cardNumber, setCardNumber] = useState('');
+  // Removed unused local form state to satisfy strict TS
   const { ref: heroRef, isVisible: heroVisible } = useScrollAnimation({ threshold: 0.1 });
-  const { ref: productsRef, isVisible: productsVisible } = useScrollAnimation({ threshold: 0.1 });
-  const { ref: formRef, isVisible: formVisible } = useScrollAnimation({ threshold: 0.1 });
+  // Additional section animations removed to satisfy strict TS (unused)
 
   return (
     <div className="min-h-screen bg-white dark:bg-neutral-900 relative overflow-hidden transition-colors duration-300">
