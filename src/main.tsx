@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import AdminDashboardDemo from './AdminDashboardDemo';
 import AdminListingDemo from './AdminListingDemo';
+import AdminDirectoryDemo from './AdminDirectoryDemo';
+import BusinessListingDemo from './BusinessListingDemo';
 import './index.css';
 import './animations.css';
 
@@ -12,9 +14,11 @@ import './animations.css';
 const demos = {
   AdminDashboardDemo,
   AdminListingDemo,
+  AdminDirectoryDemo,
+  BusinessListingDemo,
 };
 
-const Demo = demos.AdminListingDemo;
+const Demo = demos.BusinessListingDemo;
 // const Demo = VirtualCardDemo;
 // const Demo = TestCard;
 

@@ -25,6 +25,28 @@ export interface BusinessSubmission {
   owner: string;
 }
 
+export type BusinessStatus = "active" | "pending" | "suspended" | "inactive" | "expired";
+export type VerificationType = "verified" | "premium" | "basic" | "unverified";
+export type ViewMode = "list" | "card" | "map";
+
+export interface BusinessMeta {
+  rating?: number; // 0..5
+  reviewsCount?: number;
+  lastUpdated?: string; // ISO
+  monthlyViews?: number;
+  notes?: string;
+}
+
+export interface Business extends BusinessSubmission {
+  status: BusinessStatus;
+  address: string;
+  zone?: string;
+  verification?: VerificationType[];
+  ownerEmail?: string;
+  ownerPhone?: string;
+  meta?: BusinessMeta;
+}
+
 export type PriorityLevel = "high" | "normal";
 
 export interface BusinessListing extends BusinessSubmission {
@@ -46,6 +68,14 @@ export interface FilterOptions {
   categories: string[];
   priorities: PriorityLevel[];
   timeframes: string[];
+}
+
+export interface BusinessFilters {
+  query: string;
+  category: string | "All Categories";
+  status: BusinessStatus | "All Statuses";
+  zone: string | "All Zones";
+  verification: VerificationType | "All Types";
 }
 
 export interface BulkActionState {
