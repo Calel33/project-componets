@@ -9,8 +9,12 @@ import './animations.css';
 // const Demo = CandleStoreLanding;
 // const Demo = DivorceLawyerLanding;
 // const Demo = LandInvestmentDemo;
-// const Demo = AdminDashboardDemo;
-const Demo = AdminListingDemo;
+const demos = {
+  AdminDashboardDemo,
+  AdminListingDemo,
+};
+
+const Demo = demos.AdminListingDemo;
 // const Demo = VirtualCardDemo;
 // const Demo = TestCard;
 

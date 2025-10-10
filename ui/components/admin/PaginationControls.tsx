@@ -15,7 +15,6 @@ const PaginationControls = ({
   totalItems,
   onPageChange,
 }: PaginationControlsProps) => {
-  const start = (currentPage - 1) * pageSize + 1;
   const end = Math.min(currentPage * pageSize, totalItems);
 
   const pages = Array.from({ length: totalPages }, (_, index) => index + 1);

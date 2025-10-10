@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Calendar, Check, Mail, MapPin, Phone, Tag, User, X } from "lucide-react";
+import { Calendar, Check, MapPin, Phone, Tag, User, X } from "lucide-react";
 import type { BusinessListing } from "../types/admin.types";
 
 interface BusinessDetailPanelProps {
@@ -131,10 +131,6 @@ const BusinessDetailPanel = ({ business, isOpen, onClose }: BusinessDetailPanelP
             <div className="flex items-center gap-3">
               <Calendar className="h-4 w-4 text-slate-500" aria-hidden="true" />
               <span>Submitted {new Date(business.submittedAt).toLocaleString()}</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <Mail className="h-4 w-4 text-slate-500" aria-hidden="true" />
-              <span>{business.ownerEmail}</span>
             </div>
             {business.ownerPhone && (
               <div className="flex items-center gap-3">
