@@ -66,9 +66,25 @@ export interface Credential {
 export interface BusinessAction {
   label: string;
   href: string;
-  icon: LucideIcon;
+  icon?: LucideIcon;
   variant?: "primary" | "secondary" | "outline";
   external?: boolean;
+  onClick?: () => void;
+}
+
+export interface NavigationLink {
+  label: string;
+  href: string;
+  ariaLabel?: string;
+}
+
+export interface BusinessHeaderProps {
+  brand: {
+    name: string;
+    href?: string;
+  };
+  navLinks: NavigationLink[];
+  primaryAction?: BusinessAction;
 }
 
 export interface SidebarPanel {
@@ -84,15 +100,21 @@ export interface Business {
   verified: boolean;
   distanceMiles: number;
   description: string;
+  about: string;
   gallery: GalleryImage[];
   rating: BusinessRating;
-  status: BusinessStatus;
+  status?: BusinessStatus;
   contact: ContactInfo;
   hours: BusinessHours;
   credentials: Credential[];
   lastUpdated: string;
   breadcrumb: BreadcrumbItem[];
   actions: BusinessAction[];
+  specialties: string[];
+  highlights: {
+    title: string;
+    description: string;
+  }[];
 }
 
 export interface BusinessListingLayoutProps {
@@ -101,6 +123,15 @@ export interface BusinessListingLayoutProps {
   hero: ReactNode;
   main: ReactNode;
   sidebar: ReactNode;
+}
+
+export interface BreadcrumbProps {
+  items: BreadcrumbItem[];
+}
+
+export interface BusinessHeroProps {
+  gallery: ReactNode;
+  details: ReactNode;
 }
 
 export interface ImageGalleryProps {
