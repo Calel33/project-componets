@@ -6,7 +6,7 @@
 
 'use client';
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { useWebGLShader } from '../../hooks/useWebGLShader';
 
 export const ShaderBackground: React.FC = () => {

@@ -13,8 +13,6 @@ import {
   Check,
   Scale,
   FileText,
-  TrendingUp,
-  Users,
   Lock,
   Zap,
   Menu,

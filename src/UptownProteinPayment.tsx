@@ -72,7 +72,7 @@ const shipping = 0; // Free shipping
 const tax = (subtotal - discount) * 0.08;
 const total = subtotal - discount + shipping + tax;
 
-const submitPayment = async (data: PaymentFormData): Promise<PaymentResult> => {
+const submitPayment = async (_data: PaymentFormData): Promise<PaymentResult> => {
   await new Promise((resolve) => setTimeout(resolve, 1200));
 
   return {

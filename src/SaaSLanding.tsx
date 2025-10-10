@@ -16,11 +16,9 @@ import {
   Globe,
   Sparkles,
   CheckCircle2,
-  ArrowRight,
   Play,
   Code,
   Rocket,
-  Lock,
 } from 'lucide-react';
 
 export const SaaSLanding: React.FC = () => {

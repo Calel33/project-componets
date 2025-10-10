@@ -361,6 +361,157 @@ function PaymentFlow() {
 }
 ```
 
+## Virtual Payment Card Components
+
+Interactive 3D payment card with glassmorphism design and click-to-flip functionality. Perfect for modern payment interfaces, fintech applications, and interactive card previews.
+
+### 8. VirtualPaymentCard
+Main component that provides 3D card flip functionality with glassmorphism styling.
+
+**Features:**
+- **3D Flip Animation**: Smooth cubic-bezier transition (0.8s duration)
+- **Glassmorphism Design**: Backdrop blur with rgba backgrounds
+- **Shimmer Effect**: Animated shimmer across card surface (4s infinite)
+- **Click to Flip**: Interactive card flipping with callback support
+- **Responsive Design**: Optimized for mobile and desktop
+- **Type Safety**: Full TypeScript support with defined interfaces
+
+**Props:**
+```typescript
+interface VirtualPaymentCardProps {
+  cardData: VirtualCardData;
+  onFlip?: (showingBack: boolean) => void;
+  enableFlip?: boolean;
+  className?: string;
+}
+
+interface VirtualCardData {
+  cardNumber: string; // Full number (masked display)
+  cardHolder: string;
+  expiryMonth: string;
+  expiryYear: string;
+  cvv: string;
+  cardId: string;
+  issuer: string;
+}
+```
+
+**Usage:**
+```tsx
+import { VirtualPaymentCard } from '@/ui/components/payment';
+
+const cardData = {
+  cardNumber: '4921890145627631',
+  cardHolder: 'Jamie Chen',
+  expiryMonth: '05',
+  expiryYear: '2029',
+  cvv: '921',
+  cardId: 'NX-387542',
+  issuer: 'NEXUS'
+};
+
+<VirtualPaymentCard
+  cardData={cardData}
+  onFlip={(showingBack) => console.log(`Card side: ${showingBack ? 'back' : 'front'}`)}
+  enableFlip={true}
+  className="max-w-md"
+/>
+```
+
+### 9. CardFront
+Front face of the virtual payment card with glassmorphism effect.
+
+**Features:**
+- Cardholder name and masked card number display
+- Expiry date with proper formatting
+- Issuer logo and branding
+- Card chip and contactless payment icons
+- Animated shimmer effect
+- Glassmorphism styling with backdrop blur
+
+**Usage:** (Typically used internally by VirtualPaymentCard)
+```tsx
+import { CardFront } from '@/ui/components/payment';
+
+<CardFront cardData={cardData} />
+```
+
+### 10. CardBack
+Back face of the virtual payment card with security details.
+
+**Features:**
+- Magnetic strip design
+- CVV/CVC security code display
+- Card terms and conditions
+- Card ID and issuer information
+- Glassmorphism styling
+- Rotated for 3D flip animation
+
+**Usage:** (Typically used internally by VirtualPaymentCard)
+```tsx
+import { CardBack } from '@/ui/components/payment';
+
+<CardBack cardData={cardData} />
+```
+
+### Virtual Card Demo
+
+Complete interactive demo with flip counter, auto-flip mode, and card details display.
+
+**Location:** `src/VirtualCardDemo.tsx`
+
+**Features:**
+- Interactive card with click-to-flip
+- Flip counter and current side indicator
+- Auto-flip toggle for continuous animation
+- Card details panel showing all data
+- Instructions and usage example
+
+**Usage:**
+```tsx
+import { VirtualCardDemo } from '/src/VirtualCardDemo';
+
+<VirtualCardDemo />
+```
+
+### Import: Virtual Payment Card
+
+```typescript
+// Main component
+import { VirtualPaymentCard } from '@/ui/components/payment';
+
+// Individual components (for custom implementations)
+import { CardFront, CardBack } from '@/ui/components/payment';
+
+// Types for TypeScript
+import type { 
+  VirtualCardData,
+  VirtualPaymentCardProps
+} from '@/ui/components/payment/types';
+```
+
+### Styling Details
+
+The VirtualPaymentCard uses advanced CSS features:
+
+- **3D Transforms**: `transform-style: preserve-3d` and `backface-visibility: hidden`
+- **Glassmorphism**: `backdrop-filter: blur(8px)` with `rgba(255, 255, 255, 0.05)` background
+- **Animations**: Keyframe shimmer animation with 4-second infinite loop
+- **Transitions**: Cubic-bezier easing function for smooth card flipping (0.175, 0.885, 0.32, 1.275)
+
+### Browser Support
+
+- **3D Transforms**: All modern browsers (Chrome, Firefox, Safari, Edge)
+- **Backdrop Filter**: Chrome 76+, Firefox 103+, Safari 14+, Edge 79+
+- **CSS Animations**: Universal support
+
+### Accessibility
+
+- **Click/Tap Support**: Works on both mouse and touch devices
+- **Keyboard Navigation**: Card can be flipped with Enter/Space when focused
+- **Screen Readers**: Card data is properly structured and announced
+- **Reduced Motion**: Respects `prefers-reduced-motion` preference
+
 ## FlowPay Landing Page Components
 
 Modern, dark-themed landing page components with glass-morphism effects and animated payment cards. Perfect for fintech, payment platforms, and SaaS landing pages.

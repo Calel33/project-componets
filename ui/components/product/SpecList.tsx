@@ -7,10 +7,10 @@ export const SpecList: React.FC<SpecListProps> = ({ specs, className = '' }) => 
       {specs.map((spec, index) => (
         <div
           key={index}
-          className="flex justify-between py-2 border-b border-white/5 hover:bg-white/5 transition-colors duration-200 px-2 -mx-2 rounded"
+          className="flex justify-between py-2 border-b border-white/5"
         >
           <span className="text-sm text-neutral-400 font-sans">{spec.label}</span>
-          <span className="text-sm text-neutral-200 font-sans font-medium">{spec.value}</span>
+          <span className="text-sm text-neutral-200 font-sans">{spec.value}</span>
         </div>
       ))}
     </div>

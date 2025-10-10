@@ -10,7 +10,7 @@ import { AnimatedBackground } from './AnimatedBackground';
 import { FormField } from './FormField';
 import { CustomCheckbox } from './CustomCheckbox';
 import { DividerWithText } from './DividerWithText';
-import type { GlasmorphicSignInProps, SignInFormData, FormFieldError } from './types';
+import type { GlasmorphicSignInProps, SignInFormData } from './types';
 
 const validateEmail = (email: string): string | undefined => {
   if (!email) return 'Email is required';

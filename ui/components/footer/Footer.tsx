@@ -43,31 +43,46 @@ export const Footer = ({
 
   return (
     <footer className={`w-full sm:px-6 md:px-10 max-w-7xl mr-auto ml-auto pt-12 pr-4 pb-10 pl-4 ${className}`}>
-      <div className="relative overflow-hidden bg-neutral-900 rounded-3xl">
+      <div 
+        className="relative overflow-hidden rounded-3xl"
+        style={{ backgroundColor: 'var(--gray-900)' }}
+      >
         <div className="relative z-10 sm:p-12 md:p-16 pt-12 pr-8 pb-8 pl-8">
           {/* Header Section with Contact Form */}
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 pb-12 border-b border-white/10">
-            <div className="lg:col-span-4">
-              <div className="flex items-center gap-2 mb-4">
-                {companyLogo || <BadgeCheck className="w-5 h-5 text-white/80" />}
-                <h3 className="text-2xl font-semibold text-white tracking-tight">
-                  {companyName}
-                </h3>
-              </div>
-              <p className="text-white/70 max-w-3xl">{tagline}</p>
-
-              <ContactForm
-                contactInfo={contactInfo}
-                onSubmit={onContactSubmit}
-              />
+          <div 
+            className="pb-12 border-b"
+            style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}
+          >
+            <div className="flex items-center gap-2 mb-4">
+              {companyLogo || <BadgeCheck className="w-5 h-5" style={{ color: 'rgba(255, 255, 255, 0.8)' }} />}
+              <h3 
+                className="text-2xl font-semibold tracking-tight"
+                style={{ color: 'white' }}
+              >
+                {companyName}
+              </h3>
             </div>
+            <p 
+              className="max-w-3xl mb-6"
+              style={{ color: 'rgba(255, 255, 255, 0.7)' }}
+            >
+              {tagline}
+            </p>
+
+            <ContactForm
+              contactInfo={contactInfo}
+              onSubmit={onContactSubmit}
+            />
           </div>
 
           {/* Navigation Section */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 pt-12">
             {navigationSections.map((section, index) => (
               <div key={index}>
-                <h4 className="text-white/80 text-xs uppercase tracking-[0.2em]">
+                <h4 
+                  className="text-xs uppercase tracking-[0.2em]"
+                  style={{ color: 'rgba(255, 255, 255, 0.8)' }}
+                >
                   {section.title}
                 </h4>
                 <ul className="mt-3 space-y-2 text-sm">
@@ -77,7 +92,12 @@ export const Footer = ({
                         href={link.href}
                         target={link.external ? '_blank' : undefined}
                         rel={link.external ? 'noopener noreferrer' : undefined}
-                        className="text-neutral-300 hover:text-white transition inline-flex items-center gap-2"
+                        className="inline-flex items-center gap-2 transition-colors"
+                        style={{ 
+                          color: 'var(--gray-300)'
+                        }}
+                        onMouseOver={(e) => e.currentTarget.style.color = 'white'}
+                        onMouseOut={(e) => e.currentTarget.style.color = 'var(--gray-300)'}
                       >
                         {link.label}
                       </a>
@@ -89,7 +109,10 @@ export const Footer = ({
 
             {/* Newsletter Section */}
             <div>
-              <h4 className="uppercase text-xs text-white/80 tracking-[0.2em]">
+              <h4 
+                className="uppercase text-xs tracking-[0.2em]"
+                style={{ color: 'rgba(255, 255, 255, 0.8)' }}
+              >
                 Stay in touch
               </h4>
               <NewsletterForm onSubscribe={onSubscribe} />
@@ -103,7 +126,19 @@ export const Footer = ({
                     aria-label={social.ariaLabel}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/5 ring-1 ring-white/10 text-white/80 hover:text-white hover:bg-white/10 transition"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors ring-1 ring-white/10"
+                    style={{
+                      backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                      color: 'rgba(255, 255, 255, 0.8)'
+                    }}
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                      e.currentTarget.style.color = 'white';
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+                      e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)';
+                    }}
                   >
                     {getSocialIcon(social.platform)}
                   </a>
@@ -113,25 +148,40 @@ export const Footer = ({
           </div>
 
           {/* Footer Bar */}
-          <div className="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <p className="text-white/60 text-sm">
+          <div 
+            className="mt-10 pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
+            style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}
+          >
+            <p 
+              className="text-sm"
+              style={{ color: 'rgba(255, 255, 255, 0.6)' }}
+            >
               © {currentYear} {companyName}. All rights reserved.
             </p>
-            <div className="flex items-center gap-4 text-white/60 text-sm">
+            <div className="flex items-center gap-4 text-sm">
               {legalLinks.map((link, index) => (
                 <div key={index} className="flex items-center gap-4">
-                  <a href={link.href} className="hover:text-white transition">
+                  <a 
+                    href={link.href} 
+                    className="transition-colors"
+                    style={{ color: 'rgba(255, 255, 255, 0.6)' }}
+                    onMouseOver={(e) => e.currentTarget.style.color = 'white'}
+                    onMouseOut={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.6)'}
+                  >
                     {link.label}
                   </a>
                   {index < legalLinks.length - 1 && (
-                    <span className="hidden sm:block text-white/20">•</span>
+                    <span className="hidden sm:block" style={{ color: 'rgba(255, 255, 255, 0.2)' }}>•</span>
                   )}
                 </div>
               ))}
-              <span className="hidden sm:block text-white/20">•</span>
+              <span className="hidden sm:block" style={{ color: 'rgba(255, 255, 255, 0.2)' }}>•</span>
               <button
                 onClick={() => scrollToTop()}
-                className="hover:text-white transition inline-flex items-center gap-1"
+                className="inline-flex items-center gap-1 transition-colors"
+                style={{ color: 'rgba(255, 255, 255, 0.6)' }}
+                onMouseOver={(e) => e.currentTarget.style.color = 'white'}
+                onMouseOut={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.6)'}
               >
                 <ArrowUp className="w-4 h-4" />
                 Back to top
@@ -145,11 +195,13 @@ export const Footer = ({
           <>
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute -top-16 -right-10 h-72 w-72 rounded-full bg-amber-400/10 blur-3xl"
+              className="pointer-events-none absolute -top-16 -right-10 h-72 w-72 rounded-full blur-3xl"
+              style={{ backgroundColor: 'rgba(251, 191, 36, 0.1)' }}
             />
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute -bottom-20 -left-10 h-80 w-80 rounded-full bg-indigo-400/10 blur-3xl"
+              className="pointer-events-none absolute -bottom-20 -left-10 h-80 w-80 rounded-full blur-3xl"
+              style={{ backgroundColor: 'rgba(99, 102, 241, 0.1)' }}
             />
           </>
         )}

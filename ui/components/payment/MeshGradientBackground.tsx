@@ -10,7 +10,7 @@ interface MeshGradientBackgroundProps {
 }
 
 export const MeshGradientBackground: React.FC<MeshGradientBackgroundProps> = ({ 
-  className = '' 
+  className: _className = '' 
 }) => {
   return (
     <>

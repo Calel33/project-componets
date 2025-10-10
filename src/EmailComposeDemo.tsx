@@ -1,4 +1,3 @@
-import React from 'react';
 import { EmailCompose } from '../ui/components/email';
 import type { EmailDraft, EmailTemplate, RecentContact } from '../ui/components/email';
 

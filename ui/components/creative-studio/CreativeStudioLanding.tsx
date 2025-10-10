@@ -277,7 +277,7 @@ export const CreativeStudioLanding: React.FC<CreativeStudioLandingProps> = ({
       <CreativeStudioFooter socialLinks={socialLinks} />
 
       {/* Custom CSS for animations */}
-      <style jsx>{`
+      <style>{`
         .scroll-element {
           opacity: 0;
           transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);

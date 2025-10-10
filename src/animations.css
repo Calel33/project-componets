@@ -28,3 +28,41 @@
     filter: blur(0);
   }
 }
+
+/* Virtual Payment Card Animations */
+@keyframes shimmer {
+  100% {
+    left: 150%;
+  }
+}
+
+/* Card shimmer styling */
+.shimmer {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.05) 20%, 
+    rgba(255, 255, 255, 0.1) 40%, 
+    rgba(255, 255, 255, 0.05) 60%, 
+    transparent 80%);
+  transform: skewX(-15deg);
+  animation: shimmer 4s infinite;
+}
+
+/* Glass card styling */
+.glass-card-effect {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+}
+
+/* Card chip styling */
+.chip-gradient {
+  background: linear-gradient(135deg, #e6b800, #e6e6b8);
+}

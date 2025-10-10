@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Check, ArrowRight, Star, Play, Users, MessageCircle } from 'lucide-react';
+import { Check, ArrowRight, Star } from 'lucide-react';
 import { PricingTiersProps } from './types';
 
 export const PricingTiers: React.FC<PricingTiersProps> = ({
@@ -11,20 +11,7 @@ export const PricingTiers: React.FC<PricingTiersProps> = ({
 }) => {
   const [billingPeriod, setBillingPeriod] = useState('monthly');
 
-  const getIcon = (iconName: string) => {
-    switch (iconName) {
-      case 'star':
-        return Star;
-      case 'play':
-        return Play;
-      case 'users':
-        return Users;
-      case 'message':
-        return MessageCircle;
-      default:
-        return Star;
-    }
-  };
+  // Icon selection not used currently; remove until needed to satisfy strict TS
 
   return (
     <section className={`sm:py-20 pt-16 pb-16 scroll-element fade-in-up ${className}`}>
