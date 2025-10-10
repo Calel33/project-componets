@@ -1,6 +1,8 @@
 import type { LucideIcon } from "lucide-react";
 import type { Weekday } from "./business-listing.types";
 
+export type { Weekday };
+
 export interface HeaderNavLink {
   id: string;
   label: string;
@@ -119,6 +121,11 @@ export interface MenuCategoryListProps {
   tab: MenuTab;
 }
 
+export interface MenuSectionMeta {
+  title: string;
+  subtitle?: string;
+}
+
 export interface NutritionLegendItem {
   id: string;
   label: string;
@@ -198,6 +205,7 @@ export interface BusinessListingProps {
   header: HeaderNavProps;
   hero: BusinessHeroProps;
   loyalty: LoyaltyBannerProps;
+  menu: MenuSectionMeta;
   menuTabs: MenuTab[];
   nutritionLegend: NutritionLegendProps;
   quickActions: QuickAction[];
