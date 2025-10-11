@@ -7,6 +7,8 @@ export { AnimatedBackground } from './AnimatedBackground';
 export { FormField } from './FormField';
 export { CustomCheckbox } from './CustomCheckbox';
 export { DividerWithText } from './DividerWithText';
+export { GlassmorphicCard } from './GlassmorphicCard';
+export { QuantumLoginForm } from './QuantumLoginForm';
 
 export type {
   SignInFormData,
