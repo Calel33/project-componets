@@ -35,7 +35,7 @@ export const EmailCompose: React.FC<EmailComposeProps> = ({
   });
 
   const [isSaving, setIsSaving] = useState(false);
-  const autoSaveTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastDraftRef = useRef<EmailDraft>(draft);
 
   // Auto-save functionality with debouncing
