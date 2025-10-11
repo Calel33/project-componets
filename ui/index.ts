@@ -36,6 +36,7 @@ export * from './components/testimonials';
 export * from './components/unboxing';
 export * from './components/webgl';
 export * from './components/analytics';
+export * from './components/scheduling';
 
 // Product Components
 export * from './components/product';
