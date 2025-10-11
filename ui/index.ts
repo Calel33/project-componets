@@ -37,6 +37,7 @@ export * from './components/unboxing';
 export * from './components/webgl';
 export * from './components/analytics';
 export * from './components/scheduling';
+export * from './components/interior-design';
 
 // Product Components
 export * from './components/product';
