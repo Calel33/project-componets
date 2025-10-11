@@ -1,801 +1,474 @@
-import { useEffect, useMemo, useState } from "react";
 import {
+  AlertTriangle,
   Award,
   BadgeCheck,
-  Calendar,
-  Check,
-  Clock,
-  Globe,
-  Heart,
-  Info,
+  Calculator,
+  Car,
+  CreditCard,
+  ExternalLink,
   Leaf,
-  MessageSquare,
+  MapPin,
   Navigation,
   Phone,
-  RefreshCw,
+  Shield,
+  ShieldCheck,
+  ShoppingCart,
+  Sparkles,
+  Sprout,
+  Star,
+  UtensilsCrossed,
+  Wifi,
+  Smartphone,
 } from "lucide-react";
 
-import {
-  BusinessListingLayout,
-  BusinessHeader,
-  Breadcrumb,
-  BusinessHero,
-  ImageGallery,
-  BusinessDetails,
-  BusinessSidebar,
-  ContactInfo,
-  HoursDisplay,
-  CredentialsDisplay,
-  ReviewsPlaceholder,
-  LastUpdatedBadge,
-} from "../ui/components/business-listing";
+import BusinessListing from "../ui/components/business/BusinessListing";
 
 import type {
-  Business,
-  BusinessHours,
-  BusinessStatus,
+  BusinessListingProps,
+  ContactInfoProps,
+  FeatureListProps,
+  HealthSafetyProps,
+  HoursProps,
+  MenuTab,
+  NutritionLegendProps,
+  QuickAction,
   Weekday,
-} from "../ui/components/types/business-listing.types";
+  WeeklyHours,
+} from "../ui/components/types/business.types";
 
-const WEEK_ORDER: Weekday[] = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
-
-const parseTimeToMinutes = (time: string | null | undefined): number | null => {
-  if (!time) {
-    return null;
-  }
-
-  const [timePart, meridiem] = time.trim().split(" ");
-  const [hourPart, minutePart] = timePart.split(":");
-
-  let hours = Number(hourPart) % 12;
-  const minutes = Number(minutePart ?? "0");
-
-  if (meridiem?.toLowerCase() === "pm") {
-    hours += 12;
-  }
-
-  return hours * 60 + minutes;
+const weeklyHours: WeeklyHours = {
+  Monday: { open: "10:00 AM", close: "9:00 PM" },
+  Tuesday: { open: "10:00 AM", close: "9:00 PM" },
+  Wednesday: { open: "10:00 AM", close: "9:00 PM" },
+  Thursday: { open: "10:00 AM", close: "9:00 PM" },
+  Friday: { open: "10:00 AM", close: "10:00 PM" },
+  Saturday: { open: "9:00 AM", close: "10:00 PM" },
+  Sunday: { open: "9:00 AM", close: "8:00 PM" },
 };
 
-const calculateStatus = (hours: BusinessHours, reference: Date): BusinessStatus => {
-  const currentDay = WEEK_ORDER[reference.getDay()];
-  const currentMinutes = reference.getHours() * 60 + reference.getMinutes();
-  const todayHours = hours[currentDay];
-
-  if (todayHours && !todayHours.isClosed && todayHours.open && todayHours.close) {
-    const openMinutes = parseTimeToMinutes(todayHours.open);
-    const closeMinutes = parseTimeToMinutes(todayHours.close);
-
-    if (
-      openMinutes !== null &&
-      closeMinutes !== null &&
-      currentMinutes >= openMinutes &&
-      currentMinutes < closeMinutes
-    ) {
-      return {
-        isOpen: true,
-        closesAt: todayHours.close,
-        message: `Open until ${todayHours.close}`,
-      };
-    }
-
-    if (openMinutes !== null && currentMinutes < openMinutes) {
-      return {
-        isOpen: false,
-        opensAt: todayHours.open,
-        nextOpenDay: currentDay,
-        message: `Closed • Opens today at ${todayHours.open}`,
-      };
-    }
-  }
-
-  for (let offset = 1; offset <= 7; offset += 1) {
-    const nextIndex = (WEEK_ORDER.indexOf(currentDay) + offset) % WEEK_ORDER.length;
-    const nextDay = WEEK_ORDER[nextIndex];
-    const entry = hours[nextDay];
-
-    if (entry && !entry.isClosed && entry.open && entry.close) {
-      const opensAt = entry.open;
-      const label = offset === 1 ? "tomorrow" : `on ${nextDay}`;
-
-      return {
-        isOpen: false,
-        opensAt,
-        nextOpenDay: nextDay,
-        message: `Closed • Opens ${label} at ${opensAt}`,
-      };
-    }
-  }
-
-  return {
-    isOpen: false,
-    message: "Temporarily closed",
-  };
+const getCurrentWeekday = (): Weekday => {
+  const formatter = new Intl.DateTimeFormat("en-US", { weekday: "long" });
+  return formatter.format(new Date()) as Weekday;
 };
 
-const formatDistance = (miles: number) => `${miles.toFixed(1)} miles away`;
-
-const bakeryHours: BusinessHours = {
-  Sunday: { open: "7:00 AM", close: "3:00 PM" },
-  Monday: { open: "6:00 AM", close: "7:00 PM" },
-  Tuesday: { open: "6:00 AM", close: "7:00 PM" },
-  Wednesday: { open: "6:00 AM", close: "7:00 PM" },
-  Thursday: { open: "6:00 AM", close: "7:00 PM" },
-  Friday: { open: "6:00 AM", close: "8:00 PM" },
-  Saturday: { open: "6:00 AM", close: "8:00 PM" },
-};
-
-const grillHours: BusinessHours = {
-  Sunday: { open: "11:00 AM", close: "9:00 PM" },
-  Monday: { open: "11:00 AM", close: "10:00 PM" },
-  Tuesday: { open: "11:00 AM", close: "10:00 PM" },
-  Wednesday: { open: "11:00 AM", close: "10:00 PM" },
-  Thursday: { open: "11:00 AM", close: "10:00 PM" },
-  Friday: { open: "11:00 AM", close: "11:00 PM" },
-  Saturday: { open: "11:00 AM", close: "11:00 PM" },
-};
-
-const coffeeHours: BusinessHours = {
-  Sunday: { open: "7:00 AM", close: "4:00 PM" },
-  Monday: { open: "6:30 AM", close: "6:00 PM" },
-  Tuesday: { open: "6:30 AM", close: "6:00 PM" },
-  Wednesday: { open: "6:30 AM", close: "6:00 PM" },
-  Thursday: { open: "6:30 AM", close: "6:00 PM" },
-  Friday: { open: "6:30 AM", close: "7:00 PM" },
-  Saturday: { open: "7:00 AM", close: "7:00 PM" },
-};
-
-const boutiqueHours: BusinessHours = {
-  Sunday: { open: null, close: null, isClosed: true },
-  Monday: { open: "10:00 AM", close: "8:00 PM" },
-  Tuesday: { open: "10:00 AM", close: "8:00 PM" },
-  Wednesday: { open: "10:00 AM", close: "8:00 PM" },
-  Thursday: { open: "10:00 AM", close: "8:00 PM" },
-  Friday: { open: "10:00 AM", close: "8:00 PM" },
-  Saturday: { open: "10:00 AM", close: "7:00 PM" },
-};
-
-const businesses: Business[] = [
+const menuTabs: MenuTab[] = [
   {
-    id: "sunrise-bakery",
-    name: "Sunrise Bakery & Café",
-    categories: ["Bakery", "Café", "Breakfast"],
-    verified: true,
-    distanceMiles: 0.8,
-    description:
-      "Sunrise Bakery & Café crafts small-batch pastries, breads, and breakfast plates inspired by Midwest farms and French patisserie techniques.",
-    about:
-      "Every morning before dawn, our pastry team mills grains, laminates dough, and roasts seasonal produce to create a menu that feels comforting yet fresh. From heritage sourdough boules to custard-filled cruffins, each item is hand finished, thoughtfully sourced, and served with genuine hospitality.",
-    gallery: [
+    id: "build-your-bowl",
+    label: "Build Your Bowl",
+    description: "Bases, proteins, veggies, and sauces",
+    categories: [
       {
-        src: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1600&q=80",
-        alt: "Freshly baked sourdough loaves cooling on wooden shelves",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=1600&q=80",
-        alt: "Barista pouring latte art in a bright café interior",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1483695028931-1262df28ab33?auto=format&fit=crop&w=1600&q=80",
-        alt: "Plates of croissants and fruit tarts on a marble counter",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=1600&q=80",
-        alt: "Dining guests enjoying breakfast inside a sunlit bakery",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1600&q=80",
-        alt: "Stack of pancakes topped with berries and maple syrup",
-      },
-    ],
-    rating: { score: 4.8, count: 127 },
-    contact: {
-      address: "425 Oak Street, Springfield, IL 62701",
-      phone: "(217) 555-1234",
-      website: "https://sunrisebakery.com",
-      email: "hello@sunrisebakery.com",
-      directionsUrl: "https://maps.google.com/?q=425+Oak+Street,+Springfield,+IL+62701",
-    },
-    hours: bakeryHours,
-    credentials: [
-      {
-        id: "established",
-        icon: Calendar,
-        title: "Established in 2018",
-        description: "Six years serving Springfield mornings with small-batch breads.",
-      },
-      {
-        id: "licensed",
-        icon: BadgeCheck,
-        title: "Licensed Food Service Establishment",
-        description: "Compliant with Sangamon County health & safety standards.",
-      },
-      {
-        id: "organic",
-        icon: Leaf,
-        title: "Certified Organic Ingredients",
-        description: "Partner farms provide seasonal fruit, eggs, and dairy.",
-      },
-      {
-        id: "community-choice",
-        icon: Heart,
-        title: "Community Choice Award 2023",
-        description: "Voted #1 local bakery by the Springfield Neighborhood Council.",
-      },
-    ],
-    lastUpdated: "March 15, 2024",
-    breadcrumb: [
-      { label: "Home", href: "#" },
-      { label: "Restaurants", href: "#" },
-      { label: "Bakeries", href: "#" },
-      { label: "Sunrise Bakery & Café" },
-    ],
-    actions: [
-      {
-        label: "Call Now",
-        href: "tel:12175551234",
-        icon: Phone,
-        variant: "primary",
-        onClick: () => console.info("Call initiated for Sunrise Bakery & Café"),
-      },
-      {
-        label: "Get Directions",
-        href: "https://maps.google.com/?q=425+Oak+Street,+Springfield,+IL+62701",
-        icon: Navigation,
-        variant: "secondary",
-        external: true,
-        onClick: () => console.info("Directions requested for Sunrise Bakery & Café"),
-      },
-      {
-        label: "Visit Website",
-        href: "https://sunrisebakery.com",
-        icon: Globe,
-        variant: "outline",
-        external: true,
-        onClick: () => console.info("Website visit for Sunrise Bakery & Café"),
-      },
-    ],
-    specialties: [
-      "Artisan sourdough and seeded boules",
-      "Hand-laminated pastries with seasonal fruit",
-      "Farm-to-table breakfast and brunch menu",
-      "Locally roasted espresso and cold brew",
-    ],
-    highlights: [
-      {
-        title: "Handcrafted Every Morning",
+        id: "bowl-builder",
+        title: "Build Your Bowl",
         description:
-          "Grains are milled in-house and laminated dough rests for 72 hours, creating layered textures and deep flavor.",
-      },
-      {
-        title: "Community-Driven Sourcing",
-        description:
-          "Partnerships with Springfield farms ensure eggs, dairy, and produce are always fresh and sustainably grown.",
-      },
-      {
-        title: "Elevated Coffee Program",
-        description:
-          "Single-origin beans roasted weekly pair with house-made syrups, creating drinks tailored to each season.",
-      },
-      {
-        title: "Weekday Breakfast Catering",
-        description:
-          "Corporate platters and pastry boxes are delivered within a 5-mile radius with complimentary setup.",
+          "Start with a base, add your protein, load up on veggies, and finish with a signature sauce.",
+        items: [
+          {
+            id: "choose-your-base",
+            name: "Choose Your Base",
+            description:
+              "Quinoa, brown rice, cauliflower rice, mixed greens, or spinach. Portion-controlled for optimal nutrition.",
+            calorieRange: "50-180 cal",
+            badges: [
+              { id: "base-gluten-free", label: "Gluten-Free Options", variant: "glutenFree" },
+              { id: "base-vegan", label: "Vegan", variant: "vegan" },
+            ],
+            action: {
+              label: "Customize",
+              onSelect: () => console.info("Customize Green Bowl base"),
+            },
+          },
+          {
+            id: "select-your-protein",
+            name: "Select Your Protein",
+            description:
+              "Grilled chicken, grass-fed beef, wild salmon, tofu, tempeh, or plant-based protein with house spice blends.",
+            calorieRange: "120-280 cal",
+            badges: [
+              { id: "protein-high", label: "High Protein", variant: "proteinPlus" },
+              { id: "protein-vegan", label: "Vegan Options", variant: "vegan" },
+            ],
+            action: {
+              label: "Customize",
+              onSelect: () => console.info("Customize Green Bowl protein"),
+            },
+          },
+          {
+            id: "load-your-veggies",
+            name: "Load Your Veggies",
+            description:
+              "Choose from 15+ vegetables including roasted sweet potato, steamed broccoli, cucumber, and seasonal specials.",
+            calorieRange: "15-80 cal",
+            badges: [
+              { id: "veggies-unlimited", label: "Unlimited Veggies", variant: "info" },
+              { id: "veggies-vegan", label: "Vegan", variant: "vegan" },
+            ],
+            action: {
+              label: "Customize",
+              onSelect: () => console.info("Customize Green Bowl veggies"),
+            },
+          },
+          {
+            id: "signature-sauces",
+            name: "Signature Sauces",
+            description:
+              "Tahini goddess, spicy peanut, cilantro lime, balsamic vinaigrette, and house green sauce made fresh daily.",
+            calorieRange: "25-120 cal",
+            badges: [
+              { id: "sauce-nuts", label: "Contains Nuts", variant: "warning" },
+              { id: "sauce-vegan", label: "Vegan Options", variant: "vegan" },
+            ],
+            action: {
+              label: "Customize",
+              onSelect: () => console.info("Customize Green Bowl sauces"),
+            },
+          },
+        ],
       },
     ],
   },
   {
-    id: "mediterranean-grill",
-    name: "Mediterranean Grill House",
-    categories: ["Restaurant", "Mediterranean", "Healthy"],
-    verified: true,
-    distanceMiles: 1.2,
-    description:
-      "Fresh-off-the-fire kebabs, vibrant meze spreads, and family recipes from the Aegean coast served in a warm dining room.",
-    about:
-      "Chef-owner Elias Kostas slow-marinates meats overnight with mountain herbs, while the kitchen prepares pillowy pita, bright salads, and roasted vegetable platters. Guests can dine in, order mezze flights to-go, or schedule private tastings.",
-    gallery: [
+    id: "signature-bowls",
+    label: "Signature Bowls",
+    description: "Chef-crafted favorites",
+    categories: [
       {
-        src: "https://images.unsplash.com/photo-1543352634-873f17a7a088?auto=format&fit=crop&w=1600&q=80",
-        alt: "Grilled kebabs and vegetables served on a platter",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80",
-        alt: "Mediterranean restaurant interior with communal seating",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=1600&q=80",
-        alt: "Spread of colorful mezze dishes on a table",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1459448696212-0ab5120c773c?auto=format&fit=crop&w=1600&q=80",
-        alt: "Chef slicing roasted meats in a kitchen",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1473093226795-af9932fe5856?auto=format&fit=crop&w=1600&q=80",
-        alt: "Fresh salad with feta cheese and olives",
-      },
-    ],
-    rating: { score: 4.6, count: 89 },
-    contact: {
-      address: "88 Market Square, Springfield, IL 62701",
-      phone: "(217) 555-5876",
-      website: "https://medgrillhouse.com",
-      email: "reservations@medgrillhouse.com",
-      directionsUrl: "https://maps.google.com/?q=88+Market+Square,+Springfield,+IL+62701",
-    },
-    hours: grillHours,
-    credentials: [
-      {
-        id: "since2012",
-        icon: Calendar,
-        title: "Serving since 2012",
-        description: "Twelve years of family-owned Mediterranean cuisine downtown.",
-      },
-      {
-        id: "zagat",
-        icon: Award,
-        title: "2023 Zagat Rated",
-        description: "Recognized for exceptional hospitality and authentic flavors.",
-      },
-      {
-        id: "halal",
-        icon: BadgeCheck,
-        title: "Certified Halal Kitchen",
-        description: "All meats sourced from certified Midwestern suppliers.",
-      },
-    ],
-    lastUpdated: "April 2, 2024",
-    breadcrumb: [
-      { label: "Home", href: "#" },
-      { label: "Restaurants", href: "#" },
-      { label: "Mediterranean", href: "#" },
-      { label: "Mediterranean Grill House" },
-    ],
-    actions: [
-      {
-        label: "Call Now",
-        href: "tel:12175555876",
-        icon: Phone,
-        variant: "primary",
-        onClick: () => console.info("Call initiated for Mediterranean Grill House"),
-      },
-      {
-        label: "Reserve Table",
-        href: "https://medgrillhouse.com/reservations",
-        icon: Globe,
-        variant: "secondary",
-        external: true,
-        onClick: () => console.info("Reservation link opened for Mediterranean Grill House"),
-      },
-      {
-        label: "Get Directions",
-        href: "https://maps.google.com/?q=88+Market+Square,+Springfield,+IL+62701",
-        icon: Navigation,
-        variant: "outline",
-        external: true,
-        onClick: () => console.info("Directions requested for Mediterranean Grill House"),
-      },
-    ],
-    specialties: [
-      "Charcoal-grilled lamb and chicken kebabs",
-      "Build-your-own mezze platters",
-      "Cold-pressed olive oil tasting flights",
-      "Plant-forward menu with gluten-free options",
-    ],
-    highlights: [
-      {
-        title: "Live Fire Cooking",
+        id: "signature-collection",
+        title: "Signature Bowls",
         description:
-          "An open kitchen showcases charcoal grills, bringing visual drama and smoky depth to each plate.",
-      },
-      {
-        title: "Seasonal Mezze Menu",
-        description:
-          "Frequent menu updates highlight local produce in vibrant dips, spreads, and salads.",
-      },
-      {
-        title: "Catering & Private Events",
-        description:
-          "Family-style platters and on-site chefs available for weddings, conferences, and celebrations.",
-      },
-      {
-        title: "Wellness-Focused",
-        description:
-          "Customizable plates make it easy to balance proteins, grains, and vegetables for any diet.",
+          "Curated bowls featuring our most-loved combinations. Perfect when you want bold flavors without the decisions.",
+        items: [
+          {
+            id: "green-goddess",
+            name: "The Green Goddess",
+            description:
+              "Quinoa, grilled chicken, avocado, cucumber, cherry tomatoes, hemp hearts, and house green sauce.",
+            calorieRange: "485 cal",
+            priceLabel: "$12.95",
+            badges: [
+              { id: "goddess-protein", label: "High Protein", variant: "proteinPlus" },
+              { id: "goddess-gluten", label: "Gluten-Free", variant: "glutenFree" },
+            ],
+            action: {
+              label: "Order Bowl",
+              onSelect: () => console.info("Order Green Goddess bowl"),
+            },
+          },
+          {
+            id: "plant-power",
+            name: "Plant Power",
+            description:
+              "Brown rice, seasoned tempeh, roasted sweet potato, steamed broccoli, chickpeas, and tahini goddess sauce.",
+            calorieRange: "420 cal",
+            priceLabel: "$11.95",
+            badges: [
+              { id: "plant-vegan", label: "Vegan", variant: "vegan" },
+              { id: "plant-protein", label: "High Protein", variant: "proteinPlus" },
+            ],
+            action: {
+              label: "Order Bowl",
+              onSelect: () => console.info("Order Plant Power bowl"),
+            },
+          },
+          {
+            id: "protein-powerhouse",
+            name: "Protein Powerhouse",
+            description:
+              "Cauliflower rice, grass-fed beef, hard-boiled egg, spinach, bell peppers, and spicy peanut sauce.",
+            calorieRange: "520 cal",
+            priceLabel: "$14.95",
+            badges: [
+              { id: "protein-keto", label: "Keto-Friendly", variant: "info" },
+              { id: "protein-nuts", label: "Contains Nuts", variant: "warning" },
+            ],
+            action: {
+              label: "Order Bowl",
+              onSelect: () => console.info("Order Protein Powerhouse bowl"),
+            },
+          },
+        ],
       },
     ],
   },
   {
-    id: "artisan-coffee",
-    name: "Artisan Coffee Roasters",
-    categories: ["Coffee Shop", "Roastery", "Café"],
-    verified: true,
-    distanceMiles: 0.3,
-    description:
-      "Micro-batch coffee roastery with a Scandinavian-inspired tasting bar and weekly brew workshops.",
-    about:
-      "Beans are sourced directly from smallholder farms, roasted on-site, and profiled through a curated tasting flight. Guests can sample espresso, pour-over, and nitro cold brew while learning about origin stories and brew science.",
-    gallery: [
+    id: "smoothies",
+    label: "Smoothies",
+    description: "Blended wellness boosts",
+    categories: [
       {
-        src: "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?auto=format&fit=crop&w=1600&q=80",
-        alt: "Barista weighing coffee beans on a scale",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1600&q=80",
-        alt: "Latte art being poured into a ceramic cup",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1432107294469-414527cb5c65?auto=format&fit=crop&w=1600&q=80",
-        alt: "Coffee roasting machine with beans in motion",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=1600&q=80",
-        alt: "Guests enjoying coffee at a minimalist café table",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80",
-        alt: "Coffee bar with pour-over setup and brewing tools",
-      },
-    ],
-    rating: { score: 4.9, count: 203 },
-    contact: {
-      address: "19 Artisan Alley, Springfield, IL 62701",
-      phone: "(217) 555-0412",
-      website: "https://artisancoffee.co",
-      email: "hello@artisancoffee.co",
-      directionsUrl: "https://maps.google.com/?q=19+Artisan+Alley,+Springfield,+IL+62701",
-    },
-    hours: coffeeHours,
-    credentials: [
-      {
-        id: "roaster-choice",
-        icon: Award,
-        title: "2024 Roaster's Choice",
-        description: "Recognized by the Midwest Coffee Collective for farm-direct sourcing.",
-      },
-      {
-        id: "fairtrade",
-        icon: Leaf,
-        title: "Fair Trade Certified",
-        description: "Direct relationships ensure equitable pay for farming partners.",
-      },
-      {
-        id: "qgrader",
-        icon: BadgeCheck,
-        title: "Licensed Q Grader on Staff",
-        description: "Certified tasters calibrate each roast for balance and clarity.",
-      },
-    ],
-    lastUpdated: "May 6, 2024",
-    breadcrumb: [
-      { label: "Home", href: "#" },
-      { label: "Coffee Shops", href: "#" },
-      { label: "Artisan Coffee Roasters" },
-    ],
-    actions: [
-      {
-        label: "Call Now",
-        href: "tel:12175550412",
-        icon: Phone,
-        variant: "primary",
-        onClick: () => console.info("Call initiated for Artisan Coffee Roasters"),
-      },
-      {
-        label: "Order Beans",
-        href: "https://artisancoffee.co/store",
-        icon: Globe,
-        variant: "secondary",
-        external: true,
-        onClick: () => console.info("Online store opened for Artisan Coffee Roasters"),
-      },
-      {
-        label: "Get Directions",
-        href: "https://maps.google.com/?q=19+Artisan+Alley,+Springfield,+IL+62701",
-        icon: Navigation,
-        variant: "outline",
-        external: true,
-        onClick: () => console.info("Directions requested for Artisan Coffee Roasters"),
-      },
-    ],
-    specialties: [
-      "Direct-trade single origin beans",
-      "Public cupping sessions every Saturday",
-      "Seasonal signature drinks",
-      "Wholesale partnerships for cafes and offices",
-    ],
-    highlights: [
-      {
-        title: "Roasted On-Site",
+        id: "smoothie-menu",
+        title: "Signature Smoothies",
         description:
-          "Guests can see the roasting process and sample beans minutes after they leave the drum.",
-      },
-      {
-        title: "Brew Education Lab",
-        description:
-          "Workshops teach latte art, pour-over techniques, and home espresso dial-in skills.",
-      },
-      {
-        title: "Sustainable Packaging",
-        description:
-          "Compostable bags and reusable growlers reduce waste for subscriptions and walk-ins alike.",
-      },
-      {
-        title: "Community Workspace",
-        description:
-          "High-speed Wi-Fi, soft seating, and power-ready tables welcome remote workers and creatives.",
+          "Whole-fruit blends powered by superfoods, cold-pressed juices, and plant-based proteins.",
+        items: [
+          {
+            id: "tropical-green",
+            name: "Tropical Green Glow",
+            description:
+              "Kale, pineapple, mango, coconut water, and hemp protein with a citrus boost for hydration and recovery.",
+            calorieRange: "190 cal",
+            priceLabel: "$7.95",
+            badges: [
+              { id: "smoothie-vegan", label: "Vegan", variant: "vegan" },
+              { id: "smoothie-protein", label: "High Protein", variant: "proteinPlus" },
+            ],
+            action: {
+              label: "Add to Order",
+              onSelect: () => console.info("Order Tropical Green Glow smoothie"),
+            },
+          },
+          {
+            id: "berry-shield",
+            name: "Berry Antioxidant Shield",
+            description:
+              "Blueberries, strawberries, açai, almond milk, chia seeds, and a drizzle of raw honey for immunity support.",
+            calorieRange: "210 cal",
+            priceLabel: "$8.25",
+            badges: [
+              { id: "smoothie-vegetarian", label: "Vegetarian", variant: "vegetarian" },
+              { id: "smoothie-gluten", label: "Gluten-Free", variant: "glutenFree" },
+            ],
+            action: {
+              label: "Add to Order",
+              onSelect: () => console.info("Order Berry Antioxidant Shield smoothie"),
+            },
+          },
+        ],
       },
     ],
   },
   {
-    id: "urban-outfitters-boutique",
-    name: "Urban Outfitters Boutique",
-    categories: ["Retail", "Fashion", "Accessories"],
-    verified: false,
-    distanceMiles: 2.1,
-    description:
-      "Curated collection of independent fashion labels, handcrafted jewelry, and ethically sourced accessories.",
-    about:
-      "Owner Maya Thompson scouts designers across the Midwest and curates quarterly capsules featuring limited runs. Shoppers find inclusive sizing, locally made goods, and styling appointments tailored to lifestyle, not trends.",
-    gallery: [
+    id: "sides",
+    label: "Sides",
+    description: "Snacks and seasonal bites",
+    categories: [
       {
-        src: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1600&q=80",
-        alt: "Clothing rack with colorful garments in a boutique",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1600&q=80",
-        alt: "Display of accessories on a wooden table",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1600&q=80",
-        alt: "Boutique storefront with mannequins in the window",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1600&q=80",
-        alt: "Customer browsing clothing rack in boutique",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=1600&q=80",
-        alt: "Table display with folded clothes and plants",
-      },
-    ],
-    rating: { score: 4.5, count: 45 },
-    contact: {
-      address: "612 Northside Avenue, Springfield, IL 62702",
-      phone: "(217) 555-7780",
-      website: "https://urbanoutfittersboutique.com",
-      directionsUrl: "https://maps.google.com/?q=612+Northside+Avenue,+Springfield,+IL+62702",
-    },
-    hours: boutiqueHours,
-    credentials: [
-      {
-        id: "women-owned",
-        icon: Heart,
-        title: "Women-Owned Small Business",
-        description: "Member of the Springfield Collective of Independent Retailers.",
-      },
-      {
-        id: "sustainable",
-        icon: Leaf,
-        title: "Sustainable Style Coalition",
-        description: "Commits to ethical production and recycled packaging.",
-      },
-    ],
-    lastUpdated: "February 20, 2024",
-    breadcrumb: [
-      { label: "Home", href: "#" },
-      { label: "Shopping", href: "#" },
-      { label: "Boutiques", href: "#" },
-      { label: "Urban Outfitters Boutique" },
-    ],
-    actions: [
-      {
-        label: "Call Now",
-        href: "tel:12175557780",
-        icon: Phone,
-        variant: "primary",
-        onClick: () => console.info("Call initiated for Urban Outfitters Boutique"),
-      },
-      {
-        label: "Book Styling",
-        href: "https://urbanoutfittersboutique.com/styling",
-        icon: Globe,
-        variant: "secondary",
-        external: true,
-        onClick: () => console.info("Styling session link opened for Urban Outfitters Boutique"),
-      },
-    ],
-    specialties: [
-      "Limited-run designer capsules",
-      "Inclusive sizing from XS to 4X",
-      "Private styling appointments",
-      "Handcrafted accessories from Midwest makers",
-    ],
-    highlights: [
-      {
-        title: "Local Designer Showcase",
+        id: "sides-menu",
+        title: "Sides & Shareables",
         description:
-          "Monthly pop-ups feature trunk shows from regional designers with proceeds supporting artisan grants.",
-      },
-      {
-        title: "Tailored Appointments",
-        description:
-          "Stylists build outfits for travel, events, and everyday wardrobes with lookbooks sent after each session.",
-      },
-      {
-        title: "Sustainability Pledge",
-        description:
-          "Garments are sourced from brands committed to ethical labor and reduced water usage.",
-      },
-      {
-        title: "Community Closet",
-        description:
-          "Quarterly clothing swaps allow gently used items to find new homes while raising funds for local shelters.",
+          "Pair your bowl with crisp veggies, warm grains, and crunchy add-ons crafted for snacking.",
+        items: [
+          {
+            id: "avocado-cups",
+            name: "Stuffed Avocado Cups",
+            description:
+              "Avocado halves filled with citrus quinoa, roasted corn, and chile-lime pepitas.",
+            calorieRange: "240 cal",
+            priceLabel: "$5.95",
+            badges: [
+              { id: "sides-vegan", label: "Vegan", variant: "vegan" },
+              { id: "sides-gluten", label: "Gluten-Free", variant: "glutenFree" },
+            ],
+            action: {
+              label: "Add Side",
+              onSelect: () => console.info("Add Stuffed Avocado Cups"),
+            },
+          },
+          {
+            id: "crispy-chickpeas",
+            name: "Smoky Crispy Chickpeas",
+            description:
+              "Slow-roasted chickpeas tossed in smoked paprika, sea salt, and rosemary.",
+            calorieRange: "180 cal",
+            priceLabel: "$3.95",
+            badges: [
+              { id: "sides-protein", label: "High Protein", variant: "proteinPlus" },
+              { id: "sides-vegetarian", label: "Vegetarian", variant: "vegetarian" },
+            ],
+            action: {
+              label: "Add Side",
+              onSelect: () => console.info("Add Smoky Crispy Chickpeas"),
+            },
+          },
+        ],
       },
     ],
   },
 ];
+
+const nutritionLegend: NutritionLegendProps = {
+  title: "Nutrition Guide",
+  items: [
+    { id: "legend-vegan", label: "Vegan", variant: "vegan" },
+    { id: "legend-vegetarian", label: "Vegetarian", variant: "vegetarian" },
+    { id: "legend-gluten", label: "Gluten-Free", variant: "glutenFree" },
+    { id: "legend-protein", label: "High Protein (25g+)", variant: "proteinPlus" },
+  ],
+};
+
+const quickActions: QuickAction[] = [
+  {
+    id: "order",
+    label: "Order Online",
+    href: "https://greenbowlco.com/order",
+    icon: ShoppingCart,
+    variant: "primary",
+    onClick: () => console.info("Order Online clicked"),
+  },
+  {
+    id: "call",
+    label: "Call Restaurant",
+    href: "tel:15551232695",
+    icon: Phone,
+    variant: "secondary",
+    onClick: () => console.info("Call Restaurant clicked"),
+  },
+  {
+    id: "directions",
+    label: "Get Directions",
+    href: "https://maps.google.com/?q=456+Health+Street,+Downtown,+CA+90210",
+    icon: Navigation,
+    variant: "secondary",
+    onClick: () => console.info("Get Directions clicked"),
+  },
+];
+
+const contactInfo: ContactInfoProps = {
+  title: "Contact Information",
+  details: [
+    {
+      id: "address",
+      icon: MapPin,
+      label: "Address",
+      value: "456 Health Street, Downtown, CA 90210",
+      href: "https://maps.google.com/?q=456+Health+Street,+Downtown,+CA+90210",
+    },
+    {
+      id: "phone",
+      icon: Phone,
+      label: "Phone",
+      value: "(555) 123-BOWL",
+      href: "tel:15551232695",
+    },
+    {
+      id: "website",
+      icon: ExternalLink,
+      label: "Website",
+      value: "greenbowlco.com",
+      href: "https://greenbowlco.com",
+    },
+    {
+      id: "email",
+      icon: BadgeCheck,
+      label: "Email",
+      value: "hello@greenbowlco.com",
+      href: "mailto:hello@greenbowlco.com",
+    },
+  ],
+};
+
+const hoursProps = (currentDay: Weekday): HoursProps => ({
+  title: "Hours",
+  hours: weeklyHours,
+  currentDay,
+});
+
+const features: FeatureListProps = {
+  title: "Features",
+  items: [
+    { id: "wifi", icon: Wifi, label: "Free WiFi" },
+    { id: "parking", icon: Car, label: "Free Parking" },
+    { id: "payments", icon: CreditCard, label: "Accepts Credit Cards" },
+    { id: "mobile", icon: Smartphone, label: "Mobile Orders" },
+    { id: "sustainable", icon: Sprout, label: "Sustainable Packaging" },
+    { id: "organic", icon: Award, label: "Certified Organic Options" },
+  ],
+};
+
+const healthSafety: HealthSafetyProps = {
+  title: "Health & Safety",
+  items: [
+    { id: "rating", icon: Shield, label: "Health Department A+ Rating" },
+    { id: "allergens", icon: AlertTriangle, label: "Allergen Information Available" },
+    { id: "prep", icon: UtensilsCrossed, label: "Separate Prep Areas" },
+    { id: "sanitization", icon: Sparkles, label: "Enhanced Sanitization" },
+  ],
+};
+
+const businessListingProps = (currentDay: Weekday): BusinessListingProps => ({
+  header: {
+    brand: {
+      label: "LocalConnect",
+      href: "#",
+    },
+    links: [
+      { id: "directory", label: "Directory", href: "#directory" },
+      { id: "categories", label: "Categories", href: "#categories" },
+      { id: "about", label: "About", href: "#about" },
+      { id: "contact", label: "Contact", href: "#contact" },
+    ],
+    primaryAction: {
+      label: "Order Online",
+      href: "https://greenbowlco.com/order",
+      icon: ShoppingCart,
+    },
+  },
+  hero: {
+    image: {
+      src: "https://storage.googleapis.com/forge-sites/4a4ca32560f6d77eb4e90d6e44a87a90cbe8644179be6ea1b0f590fcf92430de.webp",
+      alt: "Green Bowl Co. restaurant interior with fresh ingredients on display",
+    },
+    name: "Green Bowl Co.",
+    tagline: "Fresh. Healthy. Customizable.",
+    verifiedLabel: "Verified Business",
+    description:
+      "Build your perfect bowl with fresh, locally-sourced ingredients. Enjoy endless customization, transparent nutrition, and bold flavors that make healthy eating exciting.",
+    features: [
+      {
+        id: "fresh-daily",
+        icon: Leaf,
+        title: "Fresh Daily",
+        description: "Ingredients sourced daily from local farms.",
+      },
+      {
+        id: "calorie-counter",
+        icon: Calculator,
+        title: "Calorie Counter",
+        description: "Real-time nutrition tracking as you build.",
+      },
+      {
+        id: "order-ahead",
+        icon: Smartphone,
+        title: "Order Ahead",
+        description: "Skip the line with mobile ordering.",
+      },
+      {
+        id: "earn-rewards",
+        icon: Star,
+        title: "Earn Rewards",
+        description: "Points with every healthy choice.",
+      },
+    ],
+  },
+  loyalty: {
+    title: "Green Rewards Program",
+    description:
+      "Earn points with every bowl, enjoy exclusive discounts, early menu access, and celebratory birthday treats.",
+    icon: ShieldCheck,
+    benefits: [
+      { id: "points", value: "1 pt", description: "Per $1 spent" },
+      { id: "free-bowl", value: "100 pts", description: "Free bowl reward" },
+      { id: "birthday", value: "$5 off", description: "Birthday treat" },
+    ],
+  },
+  menu: {
+    title: "Build Your Perfect Bowl",
+    subtitle: "Customize every ingredient to match your taste and nutrition goals",
+  },
+  menuTabs,
+  nutritionLegend,
+  quickActions,
+  contact: contactInfo,
+  hours: hoursProps(currentDay),
+  features,
+  healthSafety,
+});
 
 const BusinessListingDemo = () => {
-  const [selectedBusinessIndex, setSelectedBusinessIndex] = useState(0);
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [now, setNow] = useState(() => new Date());
+  const currentDay = getCurrentWeekday();
+  const props = businessListingProps(currentDay);
 
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      setNow(new Date());
-    }, 60000);
-
-    return () => window.clearInterval(interval);
-  }, []);
-
-  const currentBusiness = businesses[selectedBusinessIndex];
-
-  useEffect(() => {
-    setActiveImageIndex(0);
-  }, [selectedBusinessIndex]);
-
-  const status = useMemo(
-    () => calculateStatus(currentBusiness.hours, now),
-    [currentBusiness, now],
-  );
-
-  const currentDay = WEEK_ORDER[now.getDay()];
-
-  return (
-    <BusinessListingLayout
-      header={
-        <BusinessHeader
-          brand={{ name: "LocalConnect", href: "#" }}
-          navLinks={[
-            { label: "Directory", href: "#" },
-            { label: "Categories", href: "#" },
-            { label: "Add Business", href: "#" },
-            { label: "Sign In", href: "#" },
-          ]}
-          primaryAction={{
-            label: "List Your Business",
-            href: "#",
-            icon: Navigation,
-          }}
-        />
-      }
-      breadcrumb={<Breadcrumb items={currentBusiness.breadcrumb} />}
-      hero={
-        <BusinessHero
-          gallery={
-            <ImageGallery
-              images={currentBusiness.gallery}
-              activeIndex={activeImageIndex}
-              onSelect={setActiveImageIndex}
-            />
-          }
-          details={
-            <BusinessDetails
-              name={currentBusiness.name}
-              categories={currentBusiness.categories}
-              verified={currentBusiness.verified}
-              rating={currentBusiness.rating}
-              distanceLabel={formatDistance(currentBusiness.distanceMiles)}
-              status={status}
-              description={currentBusiness.description}
-              actions={currentBusiness.actions}
-            />
-          }
-        />
-      }
-      main={
-        <div className="space-y-6">
-          <div className="flex flex-wrap gap-2">
-            {businesses.map((business, index) => {
-              const isActive = index === selectedBusinessIndex;
-              return (
-                <button
-                  key={business.id}
-                  type="button"
-                  onClick={() => {
-                    setSelectedBusinessIndex(index);
-                    console.info(`Switched to business profile: ${business.name}`);
-                  }}
-                  aria-pressed={isActive}
-                  className={`rounded-full border px-4 py-2 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ${
-                    isActive
-                      ? "border-blue-600 bg-blue-50 text-blue-700"
-                      : "border-slate-200 bg-white text-slate-600 hover:border-blue-300"
-                  }`}
-                >
-                  {business.name}
-                </button>
-              );
-            })}
-          </div>
-
-          <section className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-100 sm:p-8">
-            <h2 className="text-xl font-semibold text-slate-900">About {currentBusiness.name}</h2>
-            <p className="mt-3 text-base text-slate-600">{currentBusiness.about}</p>
-
-            <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              {currentBusiness.highlights.map((highlight) => (
-                <article
-                  key={highlight.title}
-                  className="rounded-2xl bg-slate-50 p-5"
-                >
-                  <h3 className="text-sm font-semibold text-slate-800">{highlight.title}</h3>
-                  <p className="mt-2 text-sm text-slate-600">{highlight.description}</p>
-                </article>
-              ))}
-            </div>
-
-            <div className="mt-6">
-              <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-                Specialties
-              </h3>
-              <ul className="mt-3 grid gap-2 sm:grid-cols-2">
-                {currentBusiness.specialties.map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-sm text-slate-600">
-                    <span className="text-blue-600">
-                      <Check className="h-4 w-4" aria-hidden="true" />
-                    </span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </section>
-        </div>
-      }
-      sidebar={
-        <BusinessSidebar>
-          <ContactInfo title="Business Information" icon={Info} contact={currentBusiness.contact} />
-          <HoursDisplay
-            title="Hours of Operation"
-            icon={Clock}
-            hours={currentBusiness.hours}
-            currentDay={currentDay}
-          />
-          <CredentialsDisplay
-            title="Credentials & Recognition"
-            icon={Award}
-            credentials={currentBusiness.credentials}
-          />
-          <ReviewsPlaceholder
-            title="Customer Reviews"
-            icon={MessageSquare}
-            message="Review system coming soon! Help us build trust in our community."
-          />
-          <LastUpdatedBadge updatedAt={currentBusiness.lastUpdated} icon={RefreshCw} />
-        </BusinessSidebar>
-      }
-    />
-  );
+  return <BusinessListing {...props} />;
 };
 
 export default BusinessListingDemo;

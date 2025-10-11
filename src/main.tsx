@@ -4,6 +4,7 @@ import AdminDashboardDemo from './AdminDashboardDemo';
 import AdminListingDemo from './AdminListingDemo';
 import AdminDirectoryDemo from './AdminDirectoryDemo';
 import BusinessListingDemo from './BusinessListingDemo';
+import ListingHomepageDemo from './ListingHomepageDemo';
 import './index.css';
 import './animations.css';
 
@@ -16,6 +17,7 @@ const demos = {
   AdminListingDemo,
   AdminDirectoryDemo,
   BusinessListingDemo,
+  ListingHomepageDemo,
 };
 
 const Demo = demos.BusinessListingDemo;
