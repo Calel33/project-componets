@@ -1,4 +1,5 @@
 import React from 'react';
+import { useScrollAnimation } from '@/ui/hooks/useScrollAnimation';
 import type { ServiceCardProps } from '@/ui/components/types/interior-design.types';
 
 function ServiceCard({ icon, title, description, features, featured, badge, link }: ServiceCardProps) {
@@ -36,8 +37,9 @@ function ServiceCard({ icon, title, description, features, featured, badge, link
 }
 
 export const ServicesGrid: React.FC<{ services: ServiceCardProps[] }> = ({ services }) => {
+  const { ref, isVisible } = useScrollAnimation({ threshold: 0.2 });
   return (
-    <section id="expertise" className="relative py-24 bg-gray-50">
+    <section id="expertise" ref={ref as any} className="relative py-24 bg-gray-50">
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-5xl sm:text-6xl font-light tracking-tighter mb-4">Excellence in <span className="font-semibold">Every Detail</span></h2>
@@ -45,9 +47,11 @@ export const ServicesGrid: React.FC<{ services: ServiceCardProps[] }> = ({ servi
             From conceptual vision to flawless execution, we deliver bespoke interior solutions.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((s) => (
-            <ServiceCard key={s.title} {...s} />
+        <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-opacity duration-700 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-4'}`}>
+          {services.map((s, i) => (
+            <div key={s.title} style={{ transitionDelay: `${i * 60}ms` }} className={`transition-transform duration-700 ${isVisible ? 'translate-y-0' : 'translate-y-3'}`}>
+              <ServiceCard {...s} />
+            </div>
           ))}
         </div>
       </div>

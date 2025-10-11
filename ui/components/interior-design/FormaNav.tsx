@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useScrollProgress } from '@/ui/hooks/useScrollProgress';
 
 interface NavItem {
   id: string;
@@ -18,6 +19,10 @@ const NAV_ITEMS: NavItem[] = [
 export const FormaNav: React.FC = () => {
   const [active, setActive] = useState('hero');
   const [mobileOpen, setMobileOpen] = useState(false);
+  const progress = useScrollProgress();
+  const navRef = useRef<HTMLDivElement | null>(null);
+
+  const activeIndex = useMemo(() => NAV_ITEMS.findIndex(n => n.id === active), [active]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -43,6 +48,10 @@ export const FormaNav: React.FC = () => {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
+      {/* Top scroll progress bar */}
+      <div className="absolute left-0 right-0 top-0 h-0.5 bg-transparent">
+        <div className="h-0.5 bg-foreground/70" style={{ width: `${progress * 100}%`, transition: 'width 80ms linear' }} />
+      </div>
       <div className="absolute inset-0 bg-white/80 border-b border-border/50 backdrop-blur-xl"></div>
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8 h-16 flex items-center justify-between">
         <a href="#hero" onClick={handleClick('hero')} className="flex items-center gap-3">
@@ -53,7 +62,19 @@ export const FormaNav: React.FC = () => {
         </a>
 
         <nav className="hidden lg:flex items-center">
-          <div className="flex items-center gap-1 bg-muted/50 rounded-full p-1.5 backdrop-blur">
+          <div ref={navRef} className="relative flex items-center gap-1 bg-muted/50 rounded-full p-1.5 backdrop-blur">
+            {/* Animated underline pill */}
+            {activeIndex >= 0 && (
+              <div
+                aria-hidden
+                className="absolute top-1/2 -translate-y-1/2 h-8 rounded-full bg-background shadow-sm transition-transform duration-300"
+                style={{
+                  transform: `translate(${(activeIndex) * 100}%, -50%)`,
+                  width: '90px',
+                  zIndex: 0,
+                }}
+              />
+            )}
             {NAV_ITEMS.map((item) => (
               <a
                 key={item.id}
@@ -64,8 +85,8 @@ export const FormaNav: React.FC = () => {
                 }`}
               >
                 <span className="relative z-10">{item.label}</span>
-                <div className={`absolute inset-0 rounded-full transition-transform duration-300 ${
-                  active === item.id ? 'bg-background shadow-sm scale-100' : 'scale-0'
+                <div className={`absolute inset-0 rounded-full transition-opacity duration-300 ${
+                  active === item.id ? 'opacity-0' : 'opacity-0'
                 }`} />
               </a>
             ))}
