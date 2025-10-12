@@ -14,6 +14,7 @@ export * from './components/defi-earn';
 
 // Auth Components
 export * from './components/auth';
+export * from './components/admin';
 
 // Domain Components
 export * from './components/childcare';
@@ -25,6 +26,12 @@ export * from './components/nova';
 export * from './components/restaurant';
 export * from './components/skincare';
 export * from './components/portfolio';
+export * from './components/business';
+export * from './components/business-dashboard';
+export * from './components/business-listing';
+export * from './components/interior-design';
+export * from './components/wellness';
+export * from './components/directory';
 
 // UI Components
 export * from './components/feature-grid';
@@ -39,6 +46,13 @@ export * from './components/analytics';
 export * from './components/scheduling';
 export * from './components/hero';
 export * from './components/hotel';
+export * from './components/background';
+export * from './components/chat';
+export * from './components/ecommerce';
+export * from './components/email';
+export * from './components/faq';
+export * from './components/fashion';
+export * from './components/interactive';
 
 // Product Components
 export * from './components/product';

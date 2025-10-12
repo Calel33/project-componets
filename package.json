@@ -1,34 +1,53 @@
 {
   "name": "project-componets",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "Production-ready React component library with TypeScript and Tailwind CSS",
   "type": "module",
   "exports": {
     "./styles.css": "./styles.css",
-    "./digital-health": {
-      "import": "./dist/digital-health/index.mjs",
-      "require": "./dist/digital-health/index.cjs"
-    },
-    "./payment": {
-      "import": "./dist/payment/index.mjs",
-      "require": "./dist/payment/index.cjs"
-    },
-    "./dashboard-sidebar": {
-      "import": "./dist/dashboard-sidebar/index.mjs",
-      "require": "./dist/dashboard-sidebar/index.cjs"
-    },
-    "./defi-earn": {
-      "import": "./dist/defi-earn/index.mjs",
-      "require": "./dist/defi-earn/index.cjs"
-    },
-    "./auth": {
-      "import": "./dist/auth/index.mjs",
-      "require": "./dist/auth/index.cjs"
-    },
-    "./hooks": {
-      "import": "./dist/hooks/index.mjs",
-      "require": "./dist/hooks/index.cjs"
-    }
+    "./admin": { "import": "./dist/admin/index.mjs", "require": "./dist/admin/index.cjs" },
+    "./analytics": { "import": "./dist/analytics/index.mjs", "require": "./dist/analytics/index.cjs" },
+    "./auth": { "import": "./dist/auth/index.mjs", "require": "./dist/auth/index.cjs" },
+    "./automotive": { "import": "./dist/automotive/index.mjs", "require": "./dist/automotive/index.cjs" },
+    "./background": { "import": "./dist/background/index.mjs", "require": "./dist/background/index.cjs" },
+    "./business": { "import": "./dist/business/index.mjs", "require": "./dist/business/index.cjs" },
+    "./business-dashboard": { "import": "./dist/business-dashboard/index.mjs", "require": "./dist/business-dashboard/index.cjs" },
+    "./business-listing": { "import": "./dist/business-listing/index.mjs", "require": "./dist/business-listing/index.cjs" },
+    "./chat": { "import": "./dist/chat/index.mjs", "require": "./dist/chat/index.cjs" },
+    "./childcare": { "import": "./dist/childcare/index.mjs", "require": "./dist/childcare/index.cjs" },
+    "./creative-studio": { "import": "./dist/creative-studio/index.mjs", "require": "./dist/creative-studio/index.cjs" },
+    "./dashboard": { "import": "./dist/dashboard/index.mjs", "require": "./dist/dashboard/index.cjs" },
+    "./dashboard-sidebar": { "import": "./dist/dashboard-sidebar/index.mjs", "require": "./dist/dashboard-sidebar/index.cjs" },
+    "./defi-earn": { "import": "./dist/defi-earn/index.mjs", "require": "./dist/defi-earn/index.cjs" },
+    "./digital-health": { "import": "./dist/digital-health/index.mjs", "require": "./dist/digital-health/index.cjs" },
+    "./directory": { "import": "./dist/directory/index.mjs", "require": "./dist/directory/index.cjs" },
+    "./ecommerce": { "import": "./dist/ecommerce/index.mjs", "require": "./dist/ecommerce/index.cjs" },
+    "./email": { "import": "./dist/email/index.mjs", "require": "./dist/email/index.cjs" },
+    "./faq": { "import": "./dist/faq/index.mjs", "require": "./dist/faq/index.cjs" },
+    "./fashion": { "import": "./dist/fashion/index.mjs", "require": "./dist/fashion/index.cjs" },
+    "./feature-grid": { "import": "./dist/feature-grid/index.mjs", "require": "./dist/feature-grid/index.cjs" },
+    "./footer": { "import": "./dist/footer/index.mjs", "require": "./dist/footer/index.cjs" },
+    "./hero": { "import": "./dist/hero/index.mjs", "require": "./dist/hero/index.cjs" },
+    "./hooks": { "import": "./dist/hooks/index.mjs", "require": "./dist/hooks/index.cjs" },
+    "./hotel": { "import": "./dist/hotel/index.mjs", "require": "./dist/hotel/index.cjs" },
+    "./interactive": { "import": "./dist/interactive/index.mjs", "require": "./dist/interactive/index.cjs" },
+    "./interactive-studio": { "import": "./dist/interactive-studio/index.mjs", "require": "./dist/interactive-studio/index.cjs" },
+    "./interior-design": { "import": "./dist/interior-design/index.mjs", "require": "./dist/interior-design/index.cjs" },
+    "./medical": { "import": "./dist/medical/index.mjs", "require": "./dist/medical/index.cjs" },
+    "./nova": { "import": "./dist/nova/index.mjs", "require": "./dist/nova/index.cjs" },
+    "./onboarding": { "import": "./dist/onboarding/index.mjs", "require": "./dist/onboarding/index.cjs" },
+    "./payment": { "import": "./dist/payment/index.mjs", "require": "./dist/payment/index.cjs" },
+    "./portfolio": { "import": "./dist/portfolio/index.mjs", "require": "./dist/portfolio/index.cjs" },
+    "./product": { "import": "./dist/product/index.mjs", "require": "./dist/product/index.cjs" },
+    "./restaurant": { "import": "./dist/restaurant/index.mjs", "require": "./dist/restaurant/index.cjs" },
+    "./scheduling": { "import": "./dist/scheduling/index.mjs", "require": "./dist/scheduling/index.cjs" },
+    "./skincare": { "import": "./dist/skincare/index.mjs", "require": "./dist/skincare/index.cjs" },
+    "./storytelling": { "import": "./dist/storytelling/index.mjs", "require": "./dist/storytelling/index.cjs" },
+    "./testimonials": { "import": "./dist/testimonials/index.mjs", "require": "./dist/testimonials/index.cjs" },
+    "./unboxing": { "import": "./dist/unboxing/index.mjs", "require": "./dist/unboxing/index.cjs" },
+    "./web3": { "import": "./dist/web3/index.mjs", "require": "./dist/web3/index.cjs" },
+    "./webgl": { "import": "./dist/webgl/index.mjs", "require": "./dist/webgl/index.cjs" },
+    "./wellness": { "import": "./dist/wellness/index.mjs", "require": "./dist/wellness/index.cjs" }
   },
   "files": [
     "dist",
