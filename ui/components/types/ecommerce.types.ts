@@ -169,3 +169,12 @@ export interface ProductDetailPageProps {
   onShare?: () => void;
   onBuyNow?: () => void;
 }
+
+// Apparel landing specific
+export interface ApparelHeroProps {
+  leftImage: string;
+  rightImage: string;
+  brandName: string;
+  leftCta: { label: string; href: string };
+  rightCta: { label: string; href: string };
+}

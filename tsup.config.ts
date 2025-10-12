@@ -26,6 +26,7 @@ export default defineConfig({
     'testimonials/index': 'ui/components/testimonials/index.ts',
     'unboxing/index': 'ui/components/unboxing/index.ts',
     'webgl/index': 'ui/components/webgl/index.ts',
+    'interior-design/index': 'ui/components/interior-design/index.ts',
     
     // Shared hooks
     'hooks/index': 'ui/hooks/index.ts',
