@@ -1,6 +1,29 @@
-import { DesignPortfolioLanding } from '@/ui/components/interior-design';
-// Note: using direct path import for demo referencing local file structure
-import type { BlogPost, PortfolioProject, ProcessStep } from '@/ui/components/types/interior-design.types';
+import DesignPortfolioLanding from '@/ui/components/interior-design/DesignPortfolioLanding';
+
+type PortfolioProject = {
+  image: string;
+  title: string;
+  description: string;
+  category: string;
+  stats?: { icon: any; label: string; value: string }[];
+};
+
+type ProcessStep = {
+  number: number;
+  title: string;
+  description: string;
+  backgroundImage?: string;
+  icon?: any;
+};
+
+type BlogPost = {
+  image: string;
+  title: string;
+  excerpt: string;
+  date: string;
+  tags?: string[];
+  featured?: boolean;
+};
 
 const projects: PortfolioProject[] = [
   {

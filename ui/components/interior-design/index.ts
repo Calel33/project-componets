@@ -4,3 +4,4 @@ export { ServicesGrid } from './ServicesGrid';
 export { ProcessTimeline } from './ProcessTimeline';
 export { PortfolioGrid } from './PortfolioGrid';
 export { TestimonialsGrid } from './TestimonialsGrid';
+export { default as DesignPortfolioLanding } from './DesignPortfolioLanding';

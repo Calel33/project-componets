@@ -32,6 +32,7 @@ export * from './components/business-listing';
 export * from './components/interior-design';
 export * from './components/wellness';
 export * from './components/directory';
+export * from './components/alimony';
 
 // UI Components
 export * from './components/feature-grid';

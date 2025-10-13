@@ -6,8 +6,9 @@ Read the README.md file to get an understanding of the project.
 
 Read key files in the directories:
 
-@ constitution.md
-@ UX Design Principles.md in design-system
+@systemrule.md
+
+@UX Design Principles.md
 
 
 Explain back to me:

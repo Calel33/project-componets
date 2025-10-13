@@ -5,6 +5,7 @@
  */
 
 export { MedicalLanding, default } from './MedicalLanding';
+export { MedicalInsuranceLanding } from './MedicalInsuranceLanding';
 export { MedicalLayout } from './MedicalLayout';
 export { Navigation } from './Navigation';
 export { HeroSection } from './HeroSection';
